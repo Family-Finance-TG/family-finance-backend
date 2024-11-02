@@ -1,4 +1,4 @@
-package com.fatecmogi.family_finance.application.response;
+package com.fatecmogi.family_finance.application.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
