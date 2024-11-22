@@ -1,4 +1,4 @@
-package com.fatecmogi.family_finance.application.dto;
+package com.fatecmogi.family_finance.application.dto.paginate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

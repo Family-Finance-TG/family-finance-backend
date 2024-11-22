@@ -41,6 +41,9 @@ public class User extends BaseEntity {
     private String cpf;
 
     @ManyToOne
-    @JoinColumn(name = "user_gender_id", nullable = false)
+    @JoinColumn(name = "user_gender_id", referencedColumnName = "gender_id",  nullable = false)
     private Gender gender;
+
+    @Column(name = "user_active", nullable = false)
+    private boolean active;
 }

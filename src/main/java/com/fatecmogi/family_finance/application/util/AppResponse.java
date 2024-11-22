@@ -1,7 +1,7 @@
 package com.fatecmogi.family_finance.application.util;
 
 import com.fatecmogi.family_finance.application.dto.IDTO;
-import com.fatecmogi.family_finance.application.dto.PageResponseDTO;
+import com.fatecmogi.family_finance.application.dto.paginate.PageResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

@@ -3,7 +3,7 @@ package com.fatecmogi.family_finance.application.util;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fatecmogi.family_finance.application.dto.IDTO;
-import com.fatecmogi.family_finance.application.dto.PageResponseDTO;
+import com.fatecmogi.family_finance.application.dto.paginate.PageResponseDTO;
 import lombok.Getter;
 
 import java.util.List;
