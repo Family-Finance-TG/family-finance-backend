@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,14 +20,20 @@ import java.time.LocalDateTime;
 @AttributeOverride(name = "updatedAt", column = @Column(name = "user_updated_at"))
 public class User extends BaseEntity {
 
-    @Column(name = "user_name", nullable = false, length = 100)
-    private String name;
-
     @Column(name = "user_access_name", nullable = false, length = 100)
     private String accessName;
 
     @Column(name = "user_password", nullable = false, length = 100)
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
+    @Column(name = "user_name", nullable = false, length = 100)
+    private String name;
 
     @Column(name = "user_date_birth", nullable = false)
     private LocalDateTime dateBirth;
