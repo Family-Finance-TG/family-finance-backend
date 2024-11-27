@@ -9,14 +9,31 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@AttributeOverride(name = "id", column = @Column(name = "gender_id"))
-@AttributeOverride(name = "createdAt", column = @Column(name = "gender_created_at"))
-@AttributeOverride(name = "updatedAt", column = @Column(name = "gender_updated_at"))
-public class Gender extends BaseEntity {
+public class Gender {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "gender_id")
+    private long id;
 
     @Column(name = "gender_friendly_name", nullable = false, length = 50)
     private String friendlyName;
 
     @Column(name = "gender_value", nullable = false, length = 50)
     private String value;
+
+    @AllArgsConstructor
+    @Getter
+    public enum Values {
+        NOT_DEFINED(1, "Not defined", "NOT_DEFINED"),
+        FEMALE(2, "Female", "FEMALE"),
+        MALE(3, "Male", "MALE");
+
+        private long id;
+        private String friendlyName;
+        private String value;
+
+        public Gender toGender() {
+            return new Gender(id, friendlyName, value);
+        }
+    }
 }
