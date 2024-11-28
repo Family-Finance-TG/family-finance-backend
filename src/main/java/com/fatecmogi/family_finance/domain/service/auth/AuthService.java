@@ -4,6 +4,7 @@ import com.fatecmogi.family_finance.application.dto.IDTO;
 import com.fatecmogi.family_finance.application.dto.auth.LoginRequestDTO;
 import com.fatecmogi.family_finance.application.dto.auth.LoginResponseDTO;
 import com.fatecmogi.family_finance.application.dto.user.UserDTO;
+import com.fatecmogi.family_finance.domain.exception.FFAuthenticationException;
 import com.fatecmogi.family_finance.domain.mapper.user.UserMapper;
 import com.fatecmogi.family_finance.infrastructure.entity.Gender;
 import com.fatecmogi.family_finance.infrastructure.entity.Role;
@@ -44,7 +45,7 @@ public class AuthService {
         var user = userRepository.findByAccessName(loginRequestDTO.accessName());
 
         if (user.isEmpty() || !passwordMatches(loginRequestDTO, user.get())) {
-            throw new BadCredentialsException("Invalid access name or password");
+            throw new FFAuthenticationException();
         }
 
         Instant now = Instant.now();
