@@ -1,5 +1,6 @@
 package com.fatecmogi.family_finance.infrastructure.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -53,4 +54,9 @@ public class User extends BaseEntity {
 
     @Column(name = "user_active", nullable = false)
     private boolean active;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "family_id")
+    @JsonBackReference
+    private Family family;
 }
