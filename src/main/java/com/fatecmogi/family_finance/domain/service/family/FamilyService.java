@@ -1,4 +1,4 @@
-package com.fatecmogi.family_finance.domain.service.family.user;
+package com.fatecmogi.family_finance.domain.service.family;
 
 import com.fatecmogi.family_finance.application.dto.family.FamilyDTO;
 import com.fatecmogi.family_finance.domain.exception.FFResourceNotFoundException;
