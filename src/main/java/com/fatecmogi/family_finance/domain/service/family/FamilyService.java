@@ -92,4 +92,22 @@ public class FamilyService {
         user.setFamily(null);
         userRepository.save(user);
     }
+
+    private void updatePre(Family family, FamilyDTO dto) {
+    }
+
+    public FamilyDTO update(Long familyId, FamilyDTO dto, JwtAuthenticationToken token) {
+        User authUser = authUserRecover.getByToken(token);
+        Family family = familyRepository.findById(familyId).orElseThrow(() -> new FFResourceNotFoundException("Family not found"));
+
+        updatePre(family, dto);
+        family.setName(dto.name());
+        FamilyDTO savedFamilyDTO = familyMapper.toDTO(familyRepository.save(family));
+        updatePos(savedFamilyDTO, family);
+
+        return savedFamilyDTO;
+    }
+
+    private void updatePos(FamilyDTO dto, Family entity) {
+    }
 }
