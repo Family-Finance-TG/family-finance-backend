@@ -12,7 +12,6 @@ import com.fatecmogi.family_finance.infrastructure.entity.User;
 import com.fatecmogi.family_finance.infrastructure.repository.GenderRepository;
 import com.fatecmogi.family_finance.infrastructure.repository.RoleRepository;
 import com.fatecmogi.family_finance.infrastructure.repository.UserRepository;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;

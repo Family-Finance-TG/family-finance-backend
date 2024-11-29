@@ -1,11 +1,12 @@
 package com.fatecmogi.family_finance.application.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fatecmogi.family_finance.application.dto.IDTO;
 import com.fatecmogi.family_finance.application.dto.gender.GenderDTO;
-import com.fatecmogi.family_finance.infrastructure.entity.Gender;
 
 import java.time.LocalDateTime;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record UserDTO(
         Long id,
         String name,
