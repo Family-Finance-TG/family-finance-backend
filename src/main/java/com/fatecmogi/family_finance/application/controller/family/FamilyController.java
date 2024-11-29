@@ -48,6 +48,16 @@ public class FamilyController {
         );
     }
 
+    @PatchMapping("/{familyId}")
+    @ResponseStatus(HttpStatus.OK)
+    public AppResponseData changeName(@PathVariable("familyId") long familyId, @RequestBody FamilyDTO familyDTO, JwtAuthenticationToken token) {
+        return new AppResponseData(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.name(),
+                familyService.update(familyId, familyDTO, token)
+        );
+    }
+
     @DeleteMapping("/{familyId}/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public AppResponseData removeMember(@PathVariable("familyId") long familyId, @PathVariable("userId") long userId, JwtAuthenticationToken token) {
