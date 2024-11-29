@@ -29,6 +29,15 @@ public class FamilyController {
         );
     }
 
+    @GetMapping("/{id}")
+    public AppResponseData readById(@PathVariable("id") Long id) {
+        return new AppResponseData(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.name(),
+                familyService.findById(id)
+        );
+    }
+
     @PatchMapping("/{familyId}/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public AppResponseData addMember(@PathVariable("familyId") long familyId, @PathVariable("userId") long userId, JwtAuthenticationToken token) {
@@ -39,12 +48,13 @@ public class FamilyController {
         );
     }
 
-    @GetMapping("/{id}")
-    public AppResponseData readById(@PathVariable("userId") Long id) {
+    @DeleteMapping("/{familyId}/users/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public AppResponseData removeMember(@PathVariable("familyId") long familyId, @PathVariable("userId") long userId, JwtAuthenticationToken token) {
         return new AppResponseData(
                 HttpStatus.OK.value(),
                 HttpStatus.OK.name(),
-                familyService.findById(id)
+                familyService.removeMember(familyId, userId, token)
         );
     }
 }
