@@ -1,12 +1,14 @@
 package com.fatecmogi.family_finance.infrastructure.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fatecmogi.family_finance.infrastructure.entity.family_debt.FamilyDebt;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -26,4 +28,8 @@ public class Family extends BaseEntity{
     @OneToMany(mappedBy = "family", fetch = FetchType.EAGER)
     @JsonManagedReference
     private Set<User> members;
+
+    @OneToMany(mappedBy = "family", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<FamilyDebt> debts;
 }
