@@ -2,6 +2,7 @@ package com.fatecmogi.family_finance.application.controller.family_debt;
 
 import com.fatecmogi.family_finance.application.dto.family_debt.FamilyDebtDTO;
 import com.fatecmogi.family_finance.application.dto.payment_status.PaymentStatusDTO;
+import com.fatecmogi.family_finance.application.dto.user.UserDTO;
 import com.fatecmogi.family_finance.application.util.AppResponseData;
 import com.fatecmogi.family_finance.domain.service.family_debt.FamilyDebtService;
 import com.fatecmogi.family_finance.infrastructure.entity.payment_status.PaymentStatus;
@@ -29,7 +30,7 @@ public class FamilyDebtController {
         );
     }
 
-    @PatchMapping("{familyDebtId}")
+    @PatchMapping("{familyDebtId}/payment-status")
     public AppResponseData updatePaymentStatus(
             @PathVariable("familyId") long familyId,
             @PathVariable("familyDebtId") long familyDebtId,
@@ -38,6 +39,18 @@ public class FamilyDebtController {
                 HttpStatus.OK.value(),
                 HttpStatus.OK.name(),
                 service.updatePaymentStatus(familyId, familyDebtId, paymentStatusDTO)
+        );
+    }
+
+    @PatchMapping("{familyDebtId}/responsible")
+    public AppResponseData updateResponsible(
+            @PathVariable("familyId") long familyId,
+            @PathVariable("familyDebtId") long familyDebtId,
+            @RequestBody UserDTO responsibleId) {
+        return new AppResponseData(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.name(),
+                service.updateResponsible(familyId, familyDebtId, responsibleId)
         );
     }
 }
