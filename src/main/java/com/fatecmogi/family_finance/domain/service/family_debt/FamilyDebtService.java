@@ -1,6 +1,8 @@
 package com.fatecmogi.family_finance.domain.service.family_debt;
 
+import com.fatecmogi.family_finance.application.dto.family.FamilyDTO;
 import com.fatecmogi.family_finance.application.dto.family_debt.FamilyDebtDTO;
+import com.fatecmogi.family_finance.application.dto.payment_status.PaymentStatusDTO;
 import com.fatecmogi.family_finance.domain.exception.FFResourceNotFoundException;
 import com.fatecmogi.family_finance.domain.mapper.family_debt.FamilyDebtMapper;
 import com.fatecmogi.family_finance.infrastructure.entity.Family;
@@ -47,6 +49,14 @@ public class FamilyDebtService {
 
     private void savePos(FamilyDebtDTO dto, FamilyDebt entity) {
 
+    }
+
+    public FamilyDebtDTO updatePaymentStatus(long familyId, long familyDebtId, PaymentStatusDTO dto) {
+        Family family = familyRepository.findById(familyId).orElseThrow();
+        FamilyDebt familyDebt = familyDebtRepository.findById(familyDebtId).orElseThrow();
+        familyDebt.setPaymentStatus(paymentStatusRepository.findByValue(dto.value()).orElseThrow());
+        familyDebtRepository.save(familyDebt);
+        return familyDebtMapper.toDTO(familyDebt);
     }
 
 }
