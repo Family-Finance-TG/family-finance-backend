@@ -16,4 +16,9 @@ public class HelloController {
     public AppResponse<AppResponseData> hello() {
         return new AppResponse<>(new AppResponseData(200, "Hello World!"), HttpStatus.OK);
     }
+
+    //todo: Implementar utilizacao de mapstructure
+    //todo: Retirar tabelas descenessarias, exemplo (gender e paymentStatus), subistituindo por enums.
+    //todo: Apagar o 'family' de 'family-debts'
+    //todo: Reestruturar as excecoes criando uma excecao base interna que receba o codigo e a mensagem e as excecoes filhas que herdam dela passando essas informações.
 }
