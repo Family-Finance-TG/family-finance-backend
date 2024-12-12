@@ -14,6 +14,8 @@ import com.fatecmogi.family_finance.infrastructure.repository.UserRepository;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class FamilyService {
     private final FamilyRepository familyRepository;
@@ -36,8 +38,8 @@ public class FamilyService {
 
     public FamilyDTO save(FamilyDTO dto, JwtAuthenticationToken token) {
         User creator = authUserRecover.getByToken(token);
-        Family entity = familyMapper.toEntity(dto, creator);
-
+        Family entity = familyMapper.toEntity(dto);
+        entity.setMembers(Set.of(creator));
 
         savePre(dto, entity);
         FamilyDTO savedDTO = familyMapper.toDTO(familyRepository.save(entity));
