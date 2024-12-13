@@ -19,7 +19,7 @@ public class AuthController {
         this.service = service;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/signin")
     public AppResponseData login(@RequestBody LoginRequestDTO loginRequestDTO) {
         return new AppResponseData(
                 200,
