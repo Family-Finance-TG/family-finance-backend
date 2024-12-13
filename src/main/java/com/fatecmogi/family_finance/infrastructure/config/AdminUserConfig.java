@@ -1,6 +1,6 @@
 package com.fatecmogi.family_finance.infrastructure.config;
 
-import com.fatecmogi.family_finance.infrastructure.entity.Gender;
+import com.fatecmogi.family_finance.infrastructure.entity.gender.GenderEnum;
 import com.fatecmogi.family_finance.infrastructure.entity.Role;
 import com.fatecmogi.family_finance.infrastructure.entity.User;
 import com.fatecmogi.family_finance.infrastructure.repository.RoleRepository;
@@ -46,7 +46,7 @@ public class AdminUserConfig implements CommandLineRunner {
         user.setSalary(1420.4f);
         user.setPercentageSalary(10.0f);
         user.setCpf("12345678900");
-        user.setGender(Gender.Values.MALE.toGender());
+        user.setGender(GenderEnum.MALE);
         user.setActive(true);
 
         userRepository.save(user);

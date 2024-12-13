@@ -6,10 +6,9 @@ import com.fatecmogi.family_finance.application.dto.auth.LoginResponseDTO;
 import com.fatecmogi.family_finance.application.dto.user.UserDTO;
 import com.fatecmogi.family_finance.domain.exception.FFAuthenticationException;
 import com.fatecmogi.family_finance.domain.mapper.user.UserMapper;
-import com.fatecmogi.family_finance.infrastructure.entity.Gender;
+import com.fatecmogi.family_finance.infrastructure.entity.gender.GenderEnum;
 import com.fatecmogi.family_finance.infrastructure.entity.Role;
 import com.fatecmogi.family_finance.infrastructure.entity.User;
-import com.fatecmogi.family_finance.infrastructure.repository.GenderRepository;
 import com.fatecmogi.family_finance.infrastructure.repository.RoleRepository;
 import com.fatecmogi.family_finance.infrastructure.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,15 +24,13 @@ import java.util.stream.Collectors;
 @Service
 public class AuthService {
     private final UserRepository userRepository;
-    private final GenderRepository genderRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtEncoder jwtEncoder;
 
-    public AuthService(UserRepository userRepository, GenderRepository genderRepository, RoleRepository roleRepository, UserMapper userMapper, BCryptPasswordEncoder passwordEncoder, JwtEncoder jwtEncoder) {
+    public AuthService(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper, BCryptPasswordEncoder passwordEncoder, JwtEncoder jwtEncoder) {
         this.userRepository = userRepository;
-        this.genderRepository = genderRepository;
         this.roleRepository = roleRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
@@ -70,12 +67,11 @@ public class AuthService {
     }
 
     private void savePre(UserDTO dto, User entity) {
-        Gender gender = genderRepository.findById(dto.gender().id()).orElseThrow();
         Role basicRole = roleRepository.findByValue(Role.Values.BASIC.getValue());
 
         entity.setPassword(passwordEncoder.encode(dto.password()));
         entity.setRoles(Set.of(basicRole));
-        entity.setGender(gender);
+        entity.setGender(GenderEnum.fromValue(dto.gender().value()));
         entity.setActive(true);
     }
 

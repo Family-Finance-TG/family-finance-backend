@@ -1,6 +1,7 @@
 package com.fatecmogi.family_finance.infrastructure.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fatecmogi.family_finance.infrastructure.entity.gender.GenderEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,9 +49,9 @@ public class User extends BaseEntity {
     @Column(name = "user_cpf", nullable = false, length = 11)
     private String cpf;
 
-    @ManyToOne
-    @JoinColumn(name = "user_gender_id", referencedColumnName = "gender_id",  nullable = false)
-    private Gender gender;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_gender", nullable = false, length = 50)
+    private GenderEnum gender;
 
     @Column(name = "user_active", nullable = false)
     private boolean active;

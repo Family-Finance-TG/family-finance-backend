@@ -3,8 +3,8 @@ package com.fatecmogi.family_finance.infrastructure.entity.family_debt;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fatecmogi.family_finance.infrastructure.entity.BaseEntity;
 import com.fatecmogi.family_finance.infrastructure.entity.Family;
-import com.fatecmogi.family_finance.infrastructure.entity.payment_status.PaymentStatus;
 import com.fatecmogi.family_finance.infrastructure.entity.User;
+import com.fatecmogi.family_finance.infrastructure.entity.payment_status.PaymentStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,7 +49,7 @@ public class FamilyDebt extends BaseEntity {
     @Column(name = "family_debt_due_date", nullable = false)
     private LocalDateTime dueDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "family_debt_payment_status_id")
-    private PaymentStatus paymentStatus;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "family_debt_payment_status", nullable = false)
+    private PaymentStatusEnum paymentStatus;
 }

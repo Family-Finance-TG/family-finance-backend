@@ -2,10 +2,9 @@ package com.fatecmogi.family_finance.domain.service.user;
 
 import com.fatecmogi.family_finance.application.dto.IDTO;
 import com.fatecmogi.family_finance.application.dto.user.UserDTO;
+import com.fatecmogi.family_finance.domain.mapper.gender.GenderMapper;
 import com.fatecmogi.family_finance.domain.mapper.user.UserMapper;
-import com.fatecmogi.family_finance.infrastructure.entity.Gender;
 import com.fatecmogi.family_finance.infrastructure.entity.User;
-import com.fatecmogi.family_finance.infrastructure.repository.GenderRepository;
 import com.fatecmogi.family_finance.infrastructure.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,18 +15,17 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper mapper;
-    private final GenderRepository genderRepository;
+    private final GenderMapper genderMapper;
 
-    public UserService(UserRepository userRepository, UserMapper mapper, GenderRepository genderRepository) {
+    public UserService(UserRepository userRepository, UserMapper mapper, GenderMapper genderMapper) {
         this.userRepository = userRepository;
         this.mapper = mapper;
-        this.genderRepository = genderRepository;
+        this.genderMapper = genderMapper;
     }
 
     private void savePre(UserDTO dto, User entity) {
         entity.setActive(true);
-        Gender gender = genderRepository.findById(dto.gender().id()).orElseThrow();
-        entity.setGender(gender);
+        entity.setGender(genderMapper.toEnum(dto.gender()));
     }
 
     public UserDTO save(UserDTO dto) {
@@ -49,8 +47,7 @@ public class UserService {
     }
 
     private void updatePre(UserDTO dto, User entity) {
-        Gender gender = genderRepository.findById(dto.gender().id()).orElseThrow();
-        entity.setGender(gender);
+        entity.setGender(genderMapper.toEnum(dto.gender()));
     }
 
     public UserDTO update(Long id, UserDTO dto) {

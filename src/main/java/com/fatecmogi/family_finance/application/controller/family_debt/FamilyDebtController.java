@@ -5,7 +5,6 @@ import com.fatecmogi.family_finance.application.dto.payment_status.PaymentStatus
 import com.fatecmogi.family_finance.application.dto.user.UserDTO;
 import com.fatecmogi.family_finance.application.util.AppResponseData;
 import com.fatecmogi.family_finance.domain.service.family_debt.FamilyDebtService;
-import com.fatecmogi.family_finance.infrastructure.entity.payment_status.PaymentStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

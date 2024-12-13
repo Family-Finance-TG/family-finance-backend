@@ -1,22 +1,26 @@
 package com.fatecmogi.family_finance.infrastructure.entity.payment_status;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum PaymentStatusEnum {
 
-    TO_PAY(new PaymentStatus(1L, "To pay", "TO_PAY")),
-    PAID(new PaymentStatus(2L, "Paid", "PAID")),
-    OVERDUE(new PaymentStatus(3L, "Overdue", "OVERDUE")),
-    CANCELLED(new PaymentStatus(4L, "Cancelled", "CANCELLED"));
+    TO_PAY("TO_PAY", "To pay"),
+    PAID("PAID", "Paid"),
+    OVERDUE("OVERDUE", "Overdue"),
+    CANCELLED("CANCELLED", "Cancelled");
 
-    private final PaymentStatus paymentStatus;
+    private final String value;
+    private final String friendlyName;
 
-    PaymentStatusEnum(PaymentStatus paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
-    public PaymentStatus getPaymentStatus() {
-        return this.paymentStatus;
+    public static PaymentStatusEnum fromValue(String value) {
+        for (PaymentStatusEnum status : PaymentStatusEnum.values()) {
+            if (status.value.equals(value)) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException("Unknown enum value: " + value);
     }
 }
