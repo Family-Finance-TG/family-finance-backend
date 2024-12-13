@@ -5,12 +5,12 @@ import com.fatecmogi.family_finance.domain.exception.FFResourceNotFoundException
 import com.fatecmogi.family_finance.domain.mapper.family.FamilyMapper;
 import com.fatecmogi.family_finance.domain.mapper.user.UserMapper;
 import com.fatecmogi.family_finance.domain.util.AuthUserRecover;
-import com.fatecmogi.family_finance.infrastructure.entity.Family;
-import com.fatecmogi.family_finance.infrastructure.entity.Role;
-import com.fatecmogi.family_finance.infrastructure.entity.User;
-import com.fatecmogi.family_finance.infrastructure.repository.FamilyRepository;
-import com.fatecmogi.family_finance.infrastructure.repository.RoleRepository;
-import com.fatecmogi.family_finance.infrastructure.repository.UserRepository;
+import com.fatecmogi.family_finance.infrastructure.entity.family.Family;
+import com.fatecmogi.family_finance.infrastructure.entity.auth.Role;
+import com.fatecmogi.family_finance.infrastructure.entity.user.User;
+import com.fatecmogi.family_finance.infrastructure.repository.family.FamilyRepository;
+import com.fatecmogi.family_finance.infrastructure.repository.auth.RoleRepository;
+import com.fatecmogi.family_finance.infrastructure.repository.user.UserRepository;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 

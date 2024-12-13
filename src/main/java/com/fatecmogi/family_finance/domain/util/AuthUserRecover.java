@@ -1,7 +1,7 @@
 package com.fatecmogi.family_finance.domain.util;
 
-import com.fatecmogi.family_finance.infrastructure.entity.User;
-import com.fatecmogi.family_finance.infrastructure.repository.UserRepository;
+import com.fatecmogi.family_finance.infrastructure.entity.user.User;
+import com.fatecmogi.family_finance.infrastructure.repository.user.UserRepository;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 

@@ -2,10 +2,10 @@ package com.fatecmogi.family_finance.domain.service.user;
 
 import com.fatecmogi.family_finance.application.dto.IDTO;
 import com.fatecmogi.family_finance.application.dto.user.UserDTO;
-import com.fatecmogi.family_finance.domain.mapper.gender.GenderMapper;
+import com.fatecmogi.family_finance.domain.mapper.user.gender.GenderMapper;
 import com.fatecmogi.family_finance.domain.mapper.user.UserMapper;
-import com.fatecmogi.family_finance.infrastructure.entity.User;
-import com.fatecmogi.family_finance.infrastructure.repository.UserRepository;
+import com.fatecmogi.family_finance.infrastructure.entity.user.User;
+import com.fatecmogi.family_finance.infrastructure.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

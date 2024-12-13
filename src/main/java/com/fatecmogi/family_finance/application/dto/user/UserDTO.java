@@ -2,7 +2,7 @@ package com.fatecmogi.family_finance.application.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fatecmogi.family_finance.application.dto.IDTO;
-import com.fatecmogi.family_finance.application.dto.gender.GenderDTO;
+import com.fatecmogi.family_finance.application.dto.user.gender.GenderDTO;
 
 import java.time.LocalDateTime;
 
