@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("v1/families/{familyId}/family-debts")
+@RequestMapping("v1/families/{familyId}/debts")
 public class FamilyDebtController {
     private final FamilyDebtService service;
 
