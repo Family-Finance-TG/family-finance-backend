@@ -1,5 +1,6 @@
 package com.fatecmogi.family_finance.infrastructure.config;
 
+import com.fatecmogi.family_finance.infrastructure.entity.auth.RoleEnum;
 import com.fatecmogi.family_finance.infrastructure.entity.user.gender.GenderEnum;
 import com.fatecmogi.family_finance.infrastructure.entity.auth.Role;
 import com.fatecmogi.family_finance.infrastructure.entity.user.User;
@@ -28,7 +29,7 @@ public class AdminUserConfig implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        Role roleAdmin = roleRepository.findByValue(Role.Values.ADMIN.getValue());
+        Role roleAdmin = roleRepository.findByValue(RoleEnum.ADMIN.getValue());
 
         var userAdmin = userRepository.findByAccessName("admin");
 

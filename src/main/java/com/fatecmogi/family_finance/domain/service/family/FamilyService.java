@@ -5,8 +5,8 @@ import com.fatecmogi.family_finance.domain.exception.FFResourceNotFoundException
 import com.fatecmogi.family_finance.domain.mapper.family.FamilyMapper;
 import com.fatecmogi.family_finance.domain.mapper.user.UserMapper;
 import com.fatecmogi.family_finance.domain.util.AuthUserRecover;
+import com.fatecmogi.family_finance.infrastructure.entity.auth.RoleEnum;
 import com.fatecmogi.family_finance.infrastructure.entity.family.Family;
-import com.fatecmogi.family_finance.infrastructure.entity.auth.Role;
 import com.fatecmogi.family_finance.infrastructure.entity.user.User;
 import com.fatecmogi.family_finance.infrastructure.repository.family.FamilyRepository;
 import com.fatecmogi.family_finance.infrastructure.repository.auth.RoleRepository;
@@ -50,7 +50,7 @@ public class FamilyService {
 
     private void savePos(FamilyDTO dto, Family entity, User creator) {
         creator.setFamily(entity);
-        creator.getRoles().add(roleRepository.findByValue(Role.Values.ADMIN.getValue()));
+        creator.getRoles().add(roleRepository.findByValue(RoleEnum.ADMIN.getValue()));
         userRepository.save(creator);
     }
 

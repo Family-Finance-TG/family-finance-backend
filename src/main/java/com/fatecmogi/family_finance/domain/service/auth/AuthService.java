@@ -6,6 +6,7 @@ import com.fatecmogi.family_finance.application.dto.auth.LoginResponseDTO;
 import com.fatecmogi.family_finance.application.dto.user.UserDTO;
 import com.fatecmogi.family_finance.domain.exception.FFAuthenticationException;
 import com.fatecmogi.family_finance.domain.mapper.user.UserMapper;
+import com.fatecmogi.family_finance.infrastructure.entity.auth.RoleEnum;
 import com.fatecmogi.family_finance.infrastructure.entity.user.gender.GenderEnum;
 import com.fatecmogi.family_finance.infrastructure.entity.auth.Role;
 import com.fatecmogi.family_finance.infrastructure.entity.user.User;
@@ -67,7 +68,7 @@ public class AuthService {
     }
 
     private void savePre(UserDTO dto, User entity) {
-        Role basicRole = roleRepository.findByValue(Role.Values.BASIC.getValue());
+        Role basicRole = roleRepository.findByValue(RoleEnum.BASIC.getValue());
 
         entity.setPassword(passwordEncoder.encode(dto.password()));
         entity.setRoles(Set.of(basicRole));

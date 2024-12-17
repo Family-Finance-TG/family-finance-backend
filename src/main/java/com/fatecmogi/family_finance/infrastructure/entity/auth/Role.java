@@ -26,15 +26,4 @@ public class Role {
     @Column(name = "role_value", nullable = false, length = 50)
     private String value;
 
-    //TODO: Implementar a criação dos itens automaticamente no banco usando o enum.
-    @Getter
-    @AllArgsConstructor
-    public enum Values {
-        BASIC(1, "Basic", "BASIC"),
-        ADMIN(2, "Administrator", "ADMIN");
-
-        long id;
-        String friendlyName;
-        String value;
-    }
 }
