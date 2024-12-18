@@ -5,10 +5,7 @@ import com.fatecmogi.family_finance.application.dto.user.UserDTO;
 import com.fatecmogi.family_finance.application.util.AppResponseData;
 import com.fatecmogi.family_finance.domain.service.auth.AuthService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("v1/auth")
@@ -29,6 +26,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
+    @ResponseStatus(HttpStatus.CREATED)
     public AppResponseData signUp(@RequestBody UserDTO userDTO) {
         service.save(userDTO);
         return new AppResponseData(HttpStatus.CREATED.value(), "Usuário criado com sucesso");
