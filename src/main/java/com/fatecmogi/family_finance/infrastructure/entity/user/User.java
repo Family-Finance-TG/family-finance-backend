@@ -1,8 +1,6 @@
 package com.fatecmogi.family_finance.infrastructure.entity.user;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fatecmogi.family_finance.infrastructure.entity.BaseEntity;
-import com.fatecmogi.family_finance.infrastructure.entity.family.Family;
 import com.fatecmogi.family_finance.infrastructure.entity.auth.Role;
 import com.fatecmogi.family_finance.infrastructure.entity.user.gender.GenderEnum;
 import jakarta.persistence.*;
@@ -58,9 +56,4 @@ public class User extends BaseEntity {
 
     @Column(name = "user_active", nullable = false)
     private boolean active;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "family_id")
-    @JsonBackReference
-    private Family family;
 }

@@ -49,15 +49,13 @@ public class FamilyService {
     }
 
     private void savePos(FamilyDTO dto, Family entity, User creator) {
-        creator.setFamily(entity);
         creator.getRoles().add(roleRepository.findByValue(RoleEnum.ADMIN.getValue()));
         userRepository.save(creator);
     }
 
     public FamilyDTO findById(Long id) throws FFResourceNotFoundException {
-        Family family = familyRepository.findById(id).orElseThrow(() -> new FFResourceNotFoundException("Family not found"));
-        family.setMembers(userRepository.findByFamilyId(id).orElseThrow(() -> new FFResourceNotFoundException("Members not found")));
-
+        Family family = familyRepository.findByIdWithMembers(id)
+                .orElseThrow(() -> new FFResourceNotFoundException("Family not found"));
         return familyMapper.toDTO(family);
     }
 
@@ -73,7 +71,6 @@ public class FamilyService {
         family.getMembers().add(user);
         FamilyDTO savedFamilyDTO = familyMapper.toDTO(familyRepository.save(family));
 
-        user.setFamily(family);
         userRepository.save(user);
         addMemberPos(savedFamilyDTO, family, user);
 
@@ -91,7 +88,7 @@ public class FamilyService {
         family.getMembers().remove(user);
         FamilyDTO savedFamilyDTO = familyMapper.toDTO(familyRepository.save(family));
 
-        user.setFamily(null);
+        family.getMembers().remove(user);
         userRepository.save(user);
     }
 

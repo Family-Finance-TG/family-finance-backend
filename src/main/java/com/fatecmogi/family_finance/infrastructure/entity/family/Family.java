@@ -27,8 +27,8 @@ public class Family extends BaseEntity {
     @Column(name = "family_name", nullable = false, length = 100)
     private String name;
 
-    @OneToMany(mappedBy = "family", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_family_id")
     private Set<User> members;
 
     @OneToMany(mappedBy = "family", fetch = FetchType.EAGER)
