@@ -33,12 +33,15 @@ public class FamilyDebtService {
 
     public FamilyDebtDTO save(long familyId, FamilyDebtDTO dto) {
         FamilyDebt entity = familyDebtMapper.toEntity(dto);
-        entity.setFamily(familyRepository.findById(familyId).orElseThrow());
+        Family family = familyRepository.findById(familyId).orElseThrow();
+
         entity.setCreator(userRepository.findById(dto.creator().id()).orElseThrow());
         entity.setResponsible(userRepository.findById(dto.responsible().id()).orElseThrow());
 
         savePre(dto, entity);
         FamilyDebtDTO savedDTO = familyDebtMapper.toDTO(familyDebtRepository.save(entity));
+        family.getDebts().add(entity);
+        familyRepository.save(family);
         savePos(savedDTO, entity);
 
         return savedDTO;

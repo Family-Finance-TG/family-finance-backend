@@ -11,7 +11,6 @@ public record FamilyDebtDTO(
         String title,
         String description,
         float value,
-        FamilyDTO family,
         UserDTO creator,
         UserDTO responsible,
         LocalDateTime dueDate,

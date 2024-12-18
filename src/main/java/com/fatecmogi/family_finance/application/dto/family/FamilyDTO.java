@@ -2,6 +2,7 @@ package com.fatecmogi.family_finance.application.dto.family;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fatecmogi.family_finance.application.dto.IDTO;
+import com.fatecmogi.family_finance.application.dto.family.debt.FamilyDebtDTO;
 import com.fatecmogi.family_finance.application.dto.user.UserDTO;
 
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
 public record FamilyDTO(
         long id,
         String name,
-        Set<UserDTO> members
+        Set<UserDTO> members,
+        Set<FamilyDebtDTO> debts
 ) implements IDTO {
 }

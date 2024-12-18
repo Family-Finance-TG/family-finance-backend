@@ -6,6 +6,7 @@ import com.fatecmogi.family_finance.domain.mapper.user.gender.GenderMapper;
 import com.fatecmogi.family_finance.infrastructure.entity.family.debt.FamilyDebt;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(
         componentModel = "spring",
@@ -13,4 +14,7 @@ import org.mapstruct.Mapper;
         uses = GenderMapper.class
 )
 public interface FamilyDebtMapper extends BaseMapper<FamilyDebt, FamilyDebtDTO> {
+    @Override
+    @Mapping(target="id", ignore=true)
+    FamilyDebt toEntity(FamilyDebtDTO dto);
 }

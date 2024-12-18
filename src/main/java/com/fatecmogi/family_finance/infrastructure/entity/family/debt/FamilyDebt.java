@@ -34,11 +34,6 @@ public class FamilyDebt extends BaseEntity {
     private float value;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "family_debt_family_id")
-    @JsonBackReference
-    private Family family;
-
-    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "family_debt_creator_id")
     private User creator;
 
