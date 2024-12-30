@@ -1,18 +1,16 @@
 package com.fatecmogi.family_finance.domain.service.auth;
 
-import com.fatecmogi.family_finance.application.dto.IDTO;
 import com.fatecmogi.family_finance.application.dto.auth.LoginRequestDTO;
 import com.fatecmogi.family_finance.application.dto.auth.LoginResponseDTO;
-import com.fatecmogi.family_finance.application.dto.user.UserDTO;
 import com.fatecmogi.family_finance.application.dto.user.request.CreateUserDTO;
 import com.fatecmogi.family_finance.application.dto.user.response.UserBaseResponseDTO;
 import com.fatecmogi.family_finance.application.dto.user.response.UserDetailsResponseDTO;
 import com.fatecmogi.family_finance.domain.exception.FFAuthenticationException;
 import com.fatecmogi.family_finance.domain.mapper.user.UserMapper;
-import com.fatecmogi.family_finance.infrastructure.entity.auth.RoleEnum;
-import com.fatecmogi.family_finance.infrastructure.entity.user.gender.GenderEnum;
 import com.fatecmogi.family_finance.infrastructure.entity.auth.Role;
+import com.fatecmogi.family_finance.infrastructure.entity.auth.RoleEnum;
 import com.fatecmogi.family_finance.infrastructure.entity.user.User;
+import com.fatecmogi.family_finance.infrastructure.entity.user.gender.GenderEnum;
 import com.fatecmogi.family_finance.infrastructure.repository.auth.RoleRepository;
 import com.fatecmogi.family_finance.infrastructure.repository.user.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

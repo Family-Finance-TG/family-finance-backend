@@ -5,9 +5,9 @@ import com.fatecmogi.family_finance.application.dto.family.debt.payment_status.P
 import com.fatecmogi.family_finance.application.dto.user.UserDTO;
 import com.fatecmogi.family_finance.domain.mapper.family.debt.FamilyDebtMapper;
 import com.fatecmogi.family_finance.infrastructure.entity.family.Family;
-import com.fatecmogi.family_finance.infrastructure.entity.user.User;
 import com.fatecmogi.family_finance.infrastructure.entity.family.debt.FamilyDebt;
 import com.fatecmogi.family_finance.infrastructure.entity.family.debt.payment_status.PaymentStatusEnum;
+import com.fatecmogi.family_finance.infrastructure.entity.user.User;
 import com.fatecmogi.family_finance.infrastructure.repository.family.FamilyDebtRepository;
 import com.fatecmogi.family_finance.infrastructure.repository.family.FamilyRepository;
 import com.fatecmogi.family_finance.infrastructure.repository.user.UserRepository;

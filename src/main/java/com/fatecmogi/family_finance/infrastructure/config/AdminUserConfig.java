@@ -1,9 +1,9 @@
 package com.fatecmogi.family_finance.infrastructure.config;
 
-import com.fatecmogi.family_finance.infrastructure.entity.auth.RoleEnum;
-import com.fatecmogi.family_finance.infrastructure.entity.user.gender.GenderEnum;
 import com.fatecmogi.family_finance.infrastructure.entity.auth.Role;
+import com.fatecmogi.family_finance.infrastructure.entity.auth.RoleEnum;
 import com.fatecmogi.family_finance.infrastructure.entity.user.User;
+import com.fatecmogi.family_finance.infrastructure.entity.user.gender.GenderEnum;
 import com.fatecmogi.family_finance.infrastructure.repository.auth.RoleRepository;
 import com.fatecmogi.family_finance.infrastructure.repository.user.UserRepository;
 import jakarta.transaction.Transactional;

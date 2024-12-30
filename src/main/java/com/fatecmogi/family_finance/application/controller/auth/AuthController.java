@@ -1,7 +1,6 @@
 package com.fatecmogi.family_finance.application.controller.auth;
 
 import com.fatecmogi.family_finance.application.dto.auth.LoginRequestDTO;
-import com.fatecmogi.family_finance.application.dto.user.UserDTO;
 import com.fatecmogi.family_finance.application.dto.user.request.CreateUserDTO;
 import com.fatecmogi.family_finance.application.util.AppResponseData;
 import com.fatecmogi.family_finance.domain.service.auth.AuthService;

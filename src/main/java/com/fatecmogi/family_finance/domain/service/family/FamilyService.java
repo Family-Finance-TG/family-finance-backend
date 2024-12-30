@@ -11,13 +11,12 @@ import com.fatecmogi.family_finance.domain.util.AuthUserRecover;
 import com.fatecmogi.family_finance.infrastructure.entity.auth.RoleEnum;
 import com.fatecmogi.family_finance.infrastructure.entity.family.Family;
 import com.fatecmogi.family_finance.infrastructure.entity.user.User;
-import com.fatecmogi.family_finance.infrastructure.repository.family.FamilyRepository;
 import com.fatecmogi.family_finance.infrastructure.repository.auth.RoleRepository;
+import com.fatecmogi.family_finance.infrastructure.repository.family.FamilyRepository;
 import com.fatecmogi.family_finance.infrastructure.repository.user.UserRepository;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -5,18 +5,16 @@ import com.fatecmogi.family_finance.application.dto.family.request.CreateFamilyD
 import com.fatecmogi.family_finance.application.dto.family.request.UpdateFamilyDTO;
 import com.fatecmogi.family_finance.application.dto.family.response.FamilyDetailsResponseDTO;
 import com.fatecmogi.family_finance.application.dto.family.response.FamilySummaryResponseDTO;
-import com.fatecmogi.family_finance.domain.mapper.BaseMapper;
-import com.fatecmogi.family_finance.domain.mapper.user.gender.GenderMapper;
+import com.fatecmogi.family_finance.domain.mapper.user.UserMapper;
 import com.fatecmogi.family_finance.infrastructure.entity.family.Family;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(
         componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        uses = GenderMapper.class
+        uses = {UserMapper.class}
 )
 public interface FamilyMapper {
     FamilyDTO toDTO(Family entity);

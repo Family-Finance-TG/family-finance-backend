@@ -1,6 +1,5 @@
 package com.fatecmogi.family_finance.infrastructure.entity.family;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fatecmogi.family_finance.infrastructure.entity.BaseEntity;
 import com.fatecmogi.family_finance.infrastructure.entity.family.debt.FamilyDebt;
 import com.fatecmogi.family_finance.infrastructure.entity.user.User;
@@ -10,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Set;
 
 @Getter

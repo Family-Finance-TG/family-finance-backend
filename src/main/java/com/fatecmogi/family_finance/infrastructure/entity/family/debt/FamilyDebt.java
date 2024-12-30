@@ -1,10 +1,8 @@
 package com.fatecmogi.family_finance.infrastructure.entity.family.debt;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fatecmogi.family_finance.infrastructure.entity.BaseEntity;
-import com.fatecmogi.family_finance.infrastructure.entity.family.Family;
-import com.fatecmogi.family_finance.infrastructure.entity.user.User;
 import com.fatecmogi.family_finance.infrastructure.entity.family.debt.payment_status.PaymentStatusEnum;
+import com.fatecmogi.family_finance.infrastructure.entity.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
