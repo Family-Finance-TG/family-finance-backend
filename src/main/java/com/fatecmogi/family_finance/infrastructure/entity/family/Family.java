@@ -33,5 +33,5 @@ public class Family extends BaseEntity {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "family_debt_family_id")
-    private List<FamilyDebt> debts;
+    private Set<FamilyDebt> debts;
 }

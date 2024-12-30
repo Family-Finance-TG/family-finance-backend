@@ -1,6 +1,9 @@
 package com.fatecmogi.family_finance.domain.service.family;
 
 import com.fatecmogi.family_finance.application.dto.family.FamilyDTO;
+import com.fatecmogi.family_finance.application.dto.family.request.CreateFamilyDTO;
+import com.fatecmogi.family_finance.application.dto.family.request.UpdateFamilyDTO;
+import com.fatecmogi.family_finance.application.dto.family.response.FamilyDetailsResponseDTO;
 import com.fatecmogi.family_finance.domain.exception.FFResourceNotFoundException;
 import com.fatecmogi.family_finance.domain.mapper.family.FamilyMapper;
 import com.fatecmogi.family_finance.domain.mapper.user.UserMapper;
@@ -14,6 +17,8 @@ import com.fatecmogi.family_finance.infrastructure.repository.user.UserRepositor
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -32,44 +37,44 @@ public class FamilyService {
         this.roleRepository = roleRepository;
     }
 
-    private void savePre(FamilyDTO dto, Family entity) {
-        
+    private void savePre(CreateFamilyDTO dto, Family entity) {
+        entity.setDebts(new HashSet<>());
     }
 
-    public FamilyDTO save(FamilyDTO dto, JwtAuthenticationToken token) {
+    public FamilyDetailsResponseDTO save(CreateFamilyDTO dto, JwtAuthenticationToken token) {
         User creator = authUserRecover.getByToken(token);
         Family entity = familyMapper.toEntity(dto);
         entity.setMembers(Set.of(creator));
 
         savePre(dto, entity);
-        FamilyDTO savedDTO = familyMapper.toDTO(familyRepository.save(entity));
+        FamilyDetailsResponseDTO savedDTO = familyMapper.toDetailsDTO(familyRepository.save(entity));
         savePos(savedDTO, entity, creator);
 
         return savedDTO;
     }
 
-    private void savePos(FamilyDTO dto, Family entity, User creator) {
+    private void savePos(FamilyDetailsResponseDTO dto, Family entity, User creator) {
         creator.getRoles().add(roleRepository.findByValue(RoleEnum.ADMIN.getValue()));
         userRepository.save(creator);
     }
 
-    public FamilyDTO findById(Long id) throws FFResourceNotFoundException {
+    public FamilyDetailsResponseDTO findById(Long id) throws FFResourceNotFoundException {
         Family family = familyRepository.findByIdWithMembers(id)
                 .orElseThrow(() -> new FFResourceNotFoundException("Family not found"));
-        return familyMapper.toDTO(family);
+        return familyMapper.toDetailsDTO(family);
     }
 
     private void addMemberPre(Family family, User newMember) {
     }
 
-    public FamilyDTO addMember(Long familyId, Long userId, JwtAuthenticationToken token) {
+    public FamilyDetailsResponseDTO addMember(Long familyId, Long userId, JwtAuthenticationToken token) {
         User authUser = authUserRecover.getByToken(token);
         Family family = familyRepository.findById(familyId).orElseThrow(() -> new FFResourceNotFoundException("Family not found"));
         User user = userRepository.findById(userId).orElseThrow(() -> new FFResourceNotFoundException("User not found"));
 
         addMemberPre(family, user);
         family.getMembers().add(user);
-        FamilyDTO savedFamilyDTO = familyMapper.toDTO(familyRepository.save(family));
+        FamilyDetailsResponseDTO savedFamilyDTO = familyMapper.toDetailsDTO(familyRepository.save(family));
 
         userRepository.save(user);
         addMemberPos(savedFamilyDTO, family, user);
@@ -77,7 +82,7 @@ public class FamilyService {
         return savedFamilyDTO;
     }
 
-    private void addMemberPos(FamilyDTO dto, Family entity, User newMember) {
+    private void addMemberPos(FamilyDetailsResponseDTO dto, Family entity, User newMember) {
     }
 
     public void removeMember(Long familyId, Long userId, JwtAuthenticationToken token) {
@@ -92,21 +97,21 @@ public class FamilyService {
         userRepository.save(user);
     }
 
-    private void updatePre(Family family, FamilyDTO dto) {
+    private void updatePre(UpdateFamilyDTO dto, Family family) {
     }
 
-    public FamilyDTO update(Long familyId, FamilyDTO dto, JwtAuthenticationToken token) {
+    public FamilyDetailsResponseDTO update(Long familyId, UpdateFamilyDTO dto, JwtAuthenticationToken token) {
         User authUser = authUserRecover.getByToken(token);
         Family family = familyRepository.findById(familyId).orElseThrow(() -> new FFResourceNotFoundException("Family not found"));
 
-        updatePre(family, dto);
+        updatePre(dto, family);
         family.setName(dto.name());
-        FamilyDTO savedFamilyDTO = familyMapper.toDTO(familyRepository.save(family));
+        FamilyDetailsResponseDTO savedFamilyDTO = familyMapper.toDetailsDTO(familyRepository.save(family));
         updatePos(savedFamilyDTO, family);
 
         return savedFamilyDTO;
     }
 
-    private void updatePos(FamilyDTO dto, Family entity) {
+    private void updatePos(FamilyDetailsResponseDTO dto, Family entity) {
     }
 }

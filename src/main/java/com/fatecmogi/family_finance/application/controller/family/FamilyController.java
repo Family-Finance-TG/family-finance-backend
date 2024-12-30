@@ -1,6 +1,8 @@
 package com.fatecmogi.family_finance.application.controller.family;
 
 import com.fatecmogi.family_finance.application.dto.family.FamilyDTO;
+import com.fatecmogi.family_finance.application.dto.family.request.CreateFamilyDTO;
+import com.fatecmogi.family_finance.application.dto.family.request.UpdateFamilyDTO;
 import com.fatecmogi.family_finance.application.util.AppResponseData;
 import com.fatecmogi.family_finance.domain.service.family.FamilyService;
 import com.fatecmogi.family_finance.domain.service.user.UserService;
@@ -21,7 +23,7 @@ public class FamilyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AppResponseData create(@RequestBody FamilyDTO familyDTO, JwtAuthenticationToken token) {
+    public AppResponseData create(@RequestBody CreateFamilyDTO familyDTO, JwtAuthenticationToken token) {
         return new AppResponseData(
                 HttpStatus.CREATED.value(),
                 HttpStatus.CREATED.name(),
@@ -50,7 +52,7 @@ public class FamilyController {
 
     @PatchMapping("/{familyId}")
     @ResponseStatus(HttpStatus.OK)
-    public AppResponseData changeName(@PathVariable("familyId") long familyId, @RequestBody FamilyDTO familyDTO, JwtAuthenticationToken token) {
+    public AppResponseData changeName(@PathVariable("familyId") long familyId, @RequestBody UpdateFamilyDTO familyDTO, JwtAuthenticationToken token) {
         return new AppResponseData(
                 HttpStatus.OK.value(),
                 HttpStatus.OK.name(),
