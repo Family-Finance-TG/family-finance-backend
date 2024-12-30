@@ -4,6 +4,9 @@ import com.fatecmogi.family_finance.application.dto.IDTO;
 import com.fatecmogi.family_finance.application.dto.auth.LoginRequestDTO;
 import com.fatecmogi.family_finance.application.dto.auth.LoginResponseDTO;
 import com.fatecmogi.family_finance.application.dto.user.UserDTO;
+import com.fatecmogi.family_finance.application.dto.user.request.CreateUserDTO;
+import com.fatecmogi.family_finance.application.dto.user.response.UserBaseResponseDTO;
+import com.fatecmogi.family_finance.application.dto.user.response.UserDetailsResponseDTO;
 import com.fatecmogi.family_finance.domain.exception.FFAuthenticationException;
 import com.fatecmogi.family_finance.domain.mapper.user.UserMapper;
 import com.fatecmogi.family_finance.infrastructure.entity.auth.RoleEnum;
@@ -67,7 +70,7 @@ public class AuthService {
 
     }
 
-    private void savePre(UserDTO dto, User entity) {
+    private void savePre(CreateUserDTO dto, User entity) {
         Role basicRole = roleRepository.findByValue(RoleEnum.BASIC.getValue());
 
         entity.setPassword(passwordEncoder.encode(dto.password()));
@@ -76,17 +79,15 @@ public class AuthService {
         entity.setActive(true);
     }
 
-    public UserDTO save(UserDTO dto) {
+    public void save(CreateUserDTO dto) {
         User entity = userMapper.toEntity(dto);
 
         savePre(dto, entity);
-        UserDTO savedDTO = userMapper.toDTO(userRepository.save(entity));
+        UserDetailsResponseDTO savedDTO = userMapper.toDetailsDTO(userRepository.save(entity));
         savePos(savedDTO, entity);
-
-        return savedDTO;
     }
 
-    private void savePos(IDTO dto, User entity) {
+    private void savePos(UserBaseResponseDTO dto, User entity) {
 
     }
 

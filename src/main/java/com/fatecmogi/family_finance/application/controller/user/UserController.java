@@ -1,6 +1,7 @@
 package com.fatecmogi.family_finance.application.controller.user;
 
 import com.fatecmogi.family_finance.application.dto.user.UserDTO;
+import com.fatecmogi.family_finance.application.dto.user.request.UpdateUserDTO;
 import com.fatecmogi.family_finance.application.util.AppResponseData;
 import com.fatecmogi.family_finance.domain.service.user.UserService;
 import org.springframework.http.HttpStatus;
@@ -16,18 +17,17 @@ public class UserController {
         this.service = service;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public AppResponseData create(@RequestBody UserDTO userDTO) {
+    @GetMapping
+    public AppResponseData findAll() {
         return new AppResponseData(
-                HttpStatus.CREATED.value(),
-                HttpStatus.CREATED.name(),
-                service.save(userDTO)
+                HttpStatus.OK.value(),
+                HttpStatus.OK.name(),
+                service.findAll()
         );
     }
 
     @GetMapping("/{id}")
-    public AppResponseData readById(@PathVariable("id") Long id) {
+    public AppResponseData findById(@PathVariable("id") Long id) {
         return new AppResponseData(
                 HttpStatus.OK.value(),
                 HttpStatus.OK.name(),
@@ -36,11 +36,11 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public AppResponseData update(@PathVariable("id") Long id, @RequestBody UserDTO userDTO) {
+    public AppResponseData update(@PathVariable("id") Long id, @RequestBody UpdateUserDTO dto) {
         return new AppResponseData(
                 HttpStatus.OK.value(),
                 HttpStatus.OK.name(),
-                service.update(id, userDTO)
+                service.update(id, dto)
         );
     }
 
@@ -50,12 +50,4 @@ public class UserController {
         return new AppResponseData(HttpStatus.OK.value(), "Usuário excluido com sucesso");
     }
 
-    @GetMapping
-    public AppResponseData getAll() {
-        return new AppResponseData(
-                HttpStatus.OK.value(),
-                HttpStatus.OK.name(),
-                service.getAll()
-        );
-    }
 }

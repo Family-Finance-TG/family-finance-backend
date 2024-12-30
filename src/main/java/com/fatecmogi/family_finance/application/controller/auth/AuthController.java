@@ -2,6 +2,7 @@ package com.fatecmogi.family_finance.application.controller.auth;
 
 import com.fatecmogi.family_finance.application.dto.auth.LoginRequestDTO;
 import com.fatecmogi.family_finance.application.dto.user.UserDTO;
+import com.fatecmogi.family_finance.application.dto.user.request.CreateUserDTO;
 import com.fatecmogi.family_finance.application.util.AppResponseData;
 import com.fatecmogi.family_finance.domain.service.auth.AuthService;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public AppResponseData signUp(@RequestBody UserDTO userDTO) {
+    public AppResponseData signUp(@RequestBody CreateUserDTO userDTO) {
         service.save(userDTO);
         return new AppResponseData(HttpStatus.CREATED.value(), "Usuário criado com sucesso");
     }

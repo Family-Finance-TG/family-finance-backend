@@ -2,6 +2,9 @@ package com.fatecmogi.family_finance.domain.service.user;
 
 import com.fatecmogi.family_finance.application.dto.IDTO;
 import com.fatecmogi.family_finance.application.dto.user.UserDTO;
+import com.fatecmogi.family_finance.application.dto.user.request.UpdateUserDTO;
+import com.fatecmogi.family_finance.application.dto.user.response.UserDetailsResponseDTO;
+import com.fatecmogi.family_finance.application.dto.user.response.UserSummaryResponseDTO;
 import com.fatecmogi.family_finance.domain.mapper.user.gender.GenderMapper;
 import com.fatecmogi.family_finance.domain.mapper.user.UserMapper;
 import com.fatecmogi.family_finance.infrastructure.entity.user.User;
@@ -23,40 +26,27 @@ public class UserService {
         this.genderMapper = genderMapper;
     }
 
-    private void savePre(UserDTO dto, User entity) {
-        entity.setActive(true);
+    public List<UserSummaryResponseDTO> findAll() {
+        return userRepository.findAll().stream()
+                .map(mapper::toSummaryDTO)
+                .collect(Collectors.toList());
+    }
+
+    public UserDetailsResponseDTO findById(Long id) {
+        return mapper.toDetailsDTO(userRepository.findById(id).orElseThrow());
+    }
+
+    private void updatePre(UpdateUserDTO dto, User entity) {
         entity.setGender(genderMapper.toEnum(dto.gender()));
     }
 
-    public UserDTO save(UserDTO dto) {
-        User entity = mapper.toEntity(dto);
-
-        savePre(dto, entity);
-        UserDTO savedDTO = mapper.toDTO(userRepository.save(entity));
-        savePos(savedDTO, entity);
-
-        return savedDTO;
-    }
-
-    private void savePos(IDTO dto, User entity) {
-
-    }
-
-    public UserDTO findById(Long id) {
-        return mapper.toDTO(userRepository.findById(id).orElseThrow());
-    }
-
-    private void updatePre(UserDTO dto, User entity) {
-        entity.setGender(genderMapper.toEnum(dto.gender()));
-    }
-
-    public UserDTO update(Long id, UserDTO dto) {
+    public UserDetailsResponseDTO update(Long id, UpdateUserDTO dto) {
         User entity = userRepository.findById(id).orElseThrow();
         mapper.updateEntity(dto, entity);
 
         updatePre(dto, entity);
 
-        UserDTO updatedDTO = mapper.toDTO(userRepository.save(entity));
+        UserDetailsResponseDTO updatedDTO = mapper.toDetailsDTO(userRepository.save(entity));
 
         updatePos(updatedDTO, entity);
 
@@ -68,11 +58,5 @@ public class UserService {
 
     public void delete(Long id) {
         userRepository.deleteById(id);
-    }
-
-    public List<UserDTO> getAll() {
-        return userRepository.findAll().stream()
-                .map(mapper::toDTO)
-                .collect(Collectors.toList());
     }
 }
