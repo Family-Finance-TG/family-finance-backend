@@ -84,16 +84,13 @@ public class FamilyService {
     private void addMemberPos(FamilyDetailsResponseDTO dto, Family entity, User newMember) {
     }
 
-    public void removeMember(Long familyId, Long userId, JwtAuthenticationToken token) {
+    public FamilyDetailsResponseDTO removeMember(Long familyId, Long userId, JwtAuthenticationToken token) {
         User authUser = authUserRecover.getByToken(token);
         Family family = familyRepository.findById(familyId).orElseThrow(() -> new FFResourceNotFoundException("Family not found"));
         User user = userRepository.findById(userId).orElseThrow(() -> new FFResourceNotFoundException("User not found"));
 
         family.getMembers().remove(user);
-        FamilyDTO savedFamilyDTO = familyMapper.toDTO(familyRepository.save(family));
-
-        family.getMembers().remove(user);
-        userRepository.save(user);
+        return familyMapper.toDetailsDTO(familyRepository.save(family));
     }
 
     private void updatePre(UpdateFamilyDTO dto, Family family) {

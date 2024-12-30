@@ -62,11 +62,10 @@ public class FamilyController {
     @DeleteMapping("/{familyId}/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public AppResponseData removeMember(@PathVariable("familyId") long familyId, @PathVariable("userId") long userId, JwtAuthenticationToken token) {
-        familyService.removeMember(familyId, userId, token);
-
         return new AppResponseData(
                 HttpStatus.OK.value(),
-                HttpStatus.OK.name()
+                HttpStatus.OK.name(),
+                familyService.removeMember(familyId, userId, token)
         );
     }
 }
