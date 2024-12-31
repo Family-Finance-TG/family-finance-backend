@@ -1,8 +1,8 @@
 package com.fatecmogi.family_finance.application.controller.family.debt;
 
-import com.fatecmogi.family_finance.application.dto.family.debt.FamilyDebtDTO;
-import com.fatecmogi.family_finance.application.dto.family.debt.payment_status.PaymentStatusDTO;
-import com.fatecmogi.family_finance.application.dto.user.UserDTO;
+import com.fatecmogi.family_finance.application.dto.family.debt.request.CreateFamilyDebtDTO;
+import com.fatecmogi.family_finance.application.dto.family.debt.request.UpdatePaymentStatusDTO;
+import com.fatecmogi.family_finance.application.dto.family.debt.request.UpdateResponsibleDTO;
 import com.fatecmogi.family_finance.application.util.AppResponseData;
 import com.fatecmogi.family_finance.domain.service.family.debt.FamilyDebtService;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class FamilyDebtController {
     @ResponseStatus(HttpStatus.CREATED)
     public AppResponseData create(
             @PathVariable("familyId") long familyId,
-            @RequestBody FamilyDebtDTO familyDebtDTO) {
+            @RequestBody CreateFamilyDebtDTO familyDebtDTO) {
         return new AppResponseData(
                 HttpStatus.CREATED.value(),
                 HttpStatus.CREATED.name(),
@@ -33,7 +33,7 @@ public class FamilyDebtController {
     public AppResponseData updatePaymentStatus(
             @PathVariable("familyId") long familyId,
             @PathVariable("familyDebtId") long familyDebtId,
-            @RequestBody PaymentStatusDTO paymentStatusDTO) {
+            @RequestBody UpdatePaymentStatusDTO paymentStatusDTO) {
         return new AppResponseData(
                 HttpStatus.OK.value(),
                 HttpStatus.OK.name(),
@@ -45,7 +45,7 @@ public class FamilyDebtController {
     public AppResponseData updateResponsible(
             @PathVariable("familyId") long familyId,
             @PathVariable("familyDebtId") long familyDebtId,
-            @RequestBody UserDTO responsibleId) {
+            @RequestBody UpdateResponsibleDTO responsibleId) {
         return new AppResponseData(
                 HttpStatus.OK.value(),
                 HttpStatus.OK.name(),
