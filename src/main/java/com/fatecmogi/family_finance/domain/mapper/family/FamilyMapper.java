@@ -1,6 +1,5 @@
 package com.fatecmogi.family_finance.domain.mapper.family;
 
-import com.fatecmogi.family_finance.application.dto.family.FamilyDTO;
 import com.fatecmogi.family_finance.application.dto.family.request.CreateFamilyDTO;
 import com.fatecmogi.family_finance.application.dto.family.request.UpdateFamilyDTO;
 import com.fatecmogi.family_finance.application.dto.family.response.FamilyDetailsResponseDTO;
@@ -17,7 +16,6 @@ import org.mapstruct.MappingTarget;
         uses = {UserMapper.class}
 )
 public interface FamilyMapper {
-    FamilyDTO toDTO(Family entity);
     FamilyDetailsResponseDTO toDetailsDTO(Family entity);
     FamilySummaryResponseDTO toSummaryDTO(Family entity);
 

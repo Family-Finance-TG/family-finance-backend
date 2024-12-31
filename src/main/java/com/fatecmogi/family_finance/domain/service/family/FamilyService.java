@@ -1,6 +1,5 @@
 package com.fatecmogi.family_finance.domain.service.family;
 
-import com.fatecmogi.family_finance.application.dto.family.FamilyDTO;
 import com.fatecmogi.family_finance.application.dto.family.request.CreateFamilyDTO;
 import com.fatecmogi.family_finance.application.dto.family.request.UpdateFamilyDTO;
 import com.fatecmogi.family_finance.application.dto.family.response.FamilyDetailsResponseDTO;
