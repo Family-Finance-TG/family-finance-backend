@@ -19,8 +19,7 @@ public class GenderController {
     @GetMapping
     public AppResponseData getAll(){
         return new AppResponseData(
-                HttpStatus.OK.value(),
-                HttpStatus.OK.name(),
+                HttpStatus.OK,
                 service.getAll()
         );
     }

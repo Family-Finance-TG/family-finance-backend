@@ -3,6 +3,8 @@ package com.fatecmogi.family_finance.application.controller.auth;
 import com.fatecmogi.family_finance.application.dto.auth.LoginRequestDTO;
 import com.fatecmogi.family_finance.application.dto.user.request.CreateUserDTO;
 import com.fatecmogi.family_finance.application.util.AppResponseData;
+import com.fatecmogi.family_finance.domain.exception.FFAuthenticationException;
+import com.fatecmogi.family_finance.domain.exception.FFInternalServerErrorException;
 import com.fatecmogi.family_finance.domain.service.auth.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +21,7 @@ public class AuthController {
     @PostMapping("/signin")
     public AppResponseData login(@RequestBody LoginRequestDTO loginRequestDTO) {
         return new AppResponseData(
-                200,
-                "OK",
+                HttpStatus.OK,
                 service.login(loginRequestDTO)
         );
     }
@@ -29,7 +30,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public AppResponseData signUp(@RequestBody CreateUserDTO userDTO) {
         service.save(userDTO);
-        return new AppResponseData(HttpStatus.CREATED.value(), "Usuário criado com sucesso");
+        return new AppResponseData(HttpStatus.CREATED);
     }
 }
 

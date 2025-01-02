@@ -19,8 +19,7 @@ public class UserController {
     @GetMapping
     public AppResponseData findAll() {
         return new AppResponseData(
-                HttpStatus.OK.value(),
-                HttpStatus.OK.name(),
+                HttpStatus.OK,
                 service.findAll()
         );
     }
@@ -28,8 +27,7 @@ public class UserController {
     @GetMapping("/{id}")
     public AppResponseData findById(@PathVariable("id") Long id) {
         return new AppResponseData(
-                HttpStatus.OK.value(),
-                HttpStatus.OK.name(),
+                HttpStatus.OK,
                 service.findById(id)
         );
     }
@@ -37,8 +35,7 @@ public class UserController {
     @PutMapping("/{id}")
     public AppResponseData update(@PathVariable("id") Long id, @RequestBody UpdateUserDTO dto) {
         return new AppResponseData(
-                HttpStatus.OK.value(),
-                HttpStatus.OK.name(),
+                HttpStatus.OK,
                 service.update(id, dto)
         );
     }
@@ -46,7 +43,6 @@ public class UserController {
     @DeleteMapping("/{id}")
     public AppResponseData delete(@PathVariable("id") Long id) {
         service.delete(id);
-        return new AppResponseData(HttpStatus.OK.value(), "Usuário excluido com sucesso");
-    }
+        return new AppResponseData(HttpStatus.OK, "Usuário excluido com sucesso");    }
 
 }

@@ -1,7 +1,13 @@
 package com.fatecmogi.family_finance.domain.exception;
 
-public class FFResourceNotFoundException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class FFResourceNotFoundException extends FFInternalServerErrorException {
+    public FFResourceNotFoundException() {
+        super("Resource not found.", HttpStatus.NOT_FOUND);
+    }
+
     public FFResourceNotFoundException(String message) {
-        super(message);
+        super(message, HttpStatus.NOT_FOUND);
     }
 }

@@ -24,8 +24,7 @@ public class FamilyController {
     @ResponseStatus(HttpStatus.CREATED)
     public AppResponseData create(@RequestBody CreateFamilyDTO familyDTO, JwtAuthenticationToken token) {
         return new AppResponseData(
-                HttpStatus.CREATED.value(),
-                HttpStatus.CREATED.name(),
+                HttpStatus.CREATED,
                 familyService.save(familyDTO, token)
         );
     }
@@ -33,8 +32,7 @@ public class FamilyController {
     @GetMapping("/{id}")
     public AppResponseData readById(@PathVariable("id") Long id) {
         return new AppResponseData(
-                HttpStatus.OK.value(),
-                HttpStatus.OK.name(),
+                HttpStatus.OK,
                 familyService.findById(id)
         );
     }
@@ -43,8 +41,7 @@ public class FamilyController {
     @ResponseStatus(HttpStatus.OK)
     public AppResponseData addMember(@PathVariable("familyId") long familyId, @PathVariable("userId") long userId, JwtAuthenticationToken token) {
         return new AppResponseData(
-                HttpStatus.OK.value(),
-                HttpStatus.OK.name(),
+                HttpStatus.OK,
                 familyService.addMember(familyId, userId, token)
         );
     }
@@ -53,8 +50,7 @@ public class FamilyController {
     @ResponseStatus(HttpStatus.OK)
     public AppResponseData changeName(@PathVariable("familyId") long familyId, @RequestBody UpdateFamilyDTO familyDTO, JwtAuthenticationToken token) {
         return new AppResponseData(
-                HttpStatus.OK.value(),
-                HttpStatus.OK.name(),
+                HttpStatus.OK,
                 familyService.update(familyId, familyDTO, token)
         );
     }
@@ -63,8 +59,7 @@ public class FamilyController {
     @ResponseStatus(HttpStatus.OK)
     public AppResponseData removeMember(@PathVariable("familyId") long familyId, @PathVariable("userId") long userId, JwtAuthenticationToken token) {
         return new AppResponseData(
-                HttpStatus.OK.value(),
-                HttpStatus.OK.name(),
+                HttpStatus.OK,
                 familyService.removeMember(familyId, userId, token)
         );
     }

@@ -1,11 +1,13 @@
 package com.fatecmogi.family_finance.domain.exception;
 
-public class FFAuthenticationException extends RuntimeException {
-    public FFAuthenticationException(String message) {
-        super(message);
+import org.springframework.http.HttpStatus;
+
+public class FFAuthenticationException extends FFInternalServerErrorException {
+    public FFAuthenticationException() {
+        super("Authentication failed, verify your credentials.", HttpStatus.UNAUTHORIZED);
     }
 
-    public FFAuthenticationException() {
-        super("Authentication failed, verify your credentials.");
+    public FFAuthenticationException(String message) {
+        super(message, HttpStatus.UNAUTHORIZED);
     }
 }

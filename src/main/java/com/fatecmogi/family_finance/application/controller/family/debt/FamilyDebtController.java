@@ -23,8 +23,7 @@ public class FamilyDebtController {
             @PathVariable("familyId") long familyId,
             @RequestBody CreateFamilyDebtDTO familyDebtDTO) {
         return new AppResponseData(
-                HttpStatus.CREATED.value(),
-                HttpStatus.CREATED.name(),
+                HttpStatus.CREATED,
                 service.save(familyId, familyDebtDTO)
         );
     }
@@ -35,8 +34,7 @@ public class FamilyDebtController {
             @PathVariable("familyDebtId") long familyDebtId,
             @RequestBody UpdatePaymentStatusDTO paymentStatusDTO) {
         return new AppResponseData(
-                HttpStatus.OK.value(),
-                HttpStatus.OK.name(),
+                HttpStatus.OK,
                 service.updatePaymentStatus(familyId, familyDebtId, paymentStatusDTO)
         );
     }
@@ -47,8 +45,7 @@ public class FamilyDebtController {
             @PathVariable("familyDebtId") long familyDebtId,
             @RequestBody UpdateResponsibleDTO responsibleId) {
         return new AppResponseData(
-                HttpStatus.OK.value(),
-                HttpStatus.OK.name(),
+                HttpStatus.OK,
                 service.updateResponsible(familyId, familyDebtId, responsibleId)
         );
     }
