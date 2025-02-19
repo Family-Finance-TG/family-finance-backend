@@ -2,7 +2,7 @@
 services:
   db:
     image: postgres
-    container_name: postgres_container
+    container_name: family_finance_db
     restart: always
     ports:
       - "5432:5432"
@@ -13,18 +13,5 @@ services:
     volumes:
       - local_pgdata:/var/lib/postgresql/data
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin4_container
-    restart: always
-    ports:
-      - "8888:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-
 volumes:
   local_pgdata:
-  pgadmin-data:
