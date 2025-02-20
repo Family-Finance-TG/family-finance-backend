@@ -3,8 +3,6 @@ package com.fatecmogi.family_finance.application.controller.auth;
 import com.fatecmogi.family_finance.application.dto.auth.LoginRequestDTO;
 import com.fatecmogi.family_finance.application.dto.user.request.CreateUserDTO;
 import com.fatecmogi.family_finance.application.util.AppResponseData;
-import com.fatecmogi.family_finance.domain.exception.FFAuthenticationException;
-import com.fatecmogi.family_finance.domain.exception.FFInternalServerErrorException;
 import com.fatecmogi.family_finance.domain.service.auth.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
