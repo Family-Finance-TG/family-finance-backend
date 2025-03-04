@@ -4,6 +4,7 @@ import com.fatecmogi.family_finance.family_debt.application.dto.request.CreateFa
 import com.fatecmogi.family_finance.family_debt.application.dto.request.UpdatePaymentStatusDTO;
 import com.fatecmogi.family_finance.family_debt.application.dto.request.UpdateResponsibleDTO;
 import com.fatecmogi.family_finance.family_debt.application.dto.response.FamilyDebtDetailsResponseDTO;
+import com.fatecmogi.family_finance.family_debt.application.dto.response.FamilyDebtSummaryResponseDTO;
 import com.fatecmogi.family_finance.family_debt.domain.mapper.FamilyDebtMapper;
 import com.fatecmogi.family_finance.family.infrastructure.entity.Family;
 import com.fatecmogi.family_finance.family_debt.infrastructure.entity.FamilyDebt;
@@ -13,6 +14,9 @@ import com.fatecmogi.family_finance.family_debt.infrastructure.repository.Family
 import com.fatecmogi.family_finance.family.infrastructure.repository.FamilyRepository;
 import com.fatecmogi.family_finance.user.infrastructure.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FamilyDebtService {
@@ -28,8 +32,8 @@ public class FamilyDebtService {
         this.familyDebtMapper = familyDebtMapper;
     }
 
-    private void savePre(CreateFamilyDebtDTO dto, FamilyDebt entity) {
-
+    private void savePre(CreateFamilyDebtDTO dto, FamilyDebt entity, Family family) {
+        entity.setFamily(family);
     }
 
     public FamilyDebtDetailsResponseDTO save(long familyId, CreateFamilyDebtDTO dto) {
@@ -39,10 +43,8 @@ public class FamilyDebtService {
         entity.setCreator(userRepository.findById(dto.creatorId()).orElseThrow());
         entity.setResponsible(userRepository.findById(dto.responsibleId()).orElseThrow());
 
-        savePre(dto, entity);
+        savePre(dto, entity, family);
         FamilyDebtDetailsResponseDTO savedDTO = familyDebtMapper.toDetailsDTO(familyDebtRepository.save(entity));
-        family.getDebts().add(entity);
-        familyRepository.save(family);
         savePos(savedDTO, entity);
 
         return savedDTO;
@@ -50,6 +52,16 @@ public class FamilyDebtService {
 
     private void savePos(FamilyDebtDetailsResponseDTO dto, FamilyDebt entity) {
 
+    }
+
+    public List<FamilyDebtSummaryResponseDTO> findAll(long familyId) {
+        return familyDebtRepository.findAllByFamilyId(familyId).stream()
+                .map(familyDebtMapper::toSummaryDTO)
+                .collect(Collectors.toList());
+    }
+
+    public FamilyDebtDetailsResponseDTO findById(long familyId, long familyDebtId) {
+        return familyDebtMapper.toDetailsDTO(familyDebtRepository.findById(familyDebtId).orElseThrow());
     }
 
     public FamilyDebtDetailsResponseDTO updatePaymentStatus(long familyId, long familyDebtId, UpdatePaymentStatusDTO dto) {

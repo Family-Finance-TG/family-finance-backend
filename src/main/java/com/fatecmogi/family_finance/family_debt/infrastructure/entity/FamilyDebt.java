@@ -1,6 +1,7 @@
 package com.fatecmogi.family_finance.family_debt.infrastructure.entity;
 
 import com.fatecmogi.family_finance.common.infrastructure.entity.BaseEntity;
+import com.fatecmogi.family_finance.family.infrastructure.entity.Family;
 import com.fatecmogi.family_finance.user.infrastructure.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -44,4 +45,8 @@ public class FamilyDebt extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "family_debt_payment_status", nullable = false)
     private PaymentStatusEnum paymentStatus;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "family_debt_family_id")
+    private Family family;
 }

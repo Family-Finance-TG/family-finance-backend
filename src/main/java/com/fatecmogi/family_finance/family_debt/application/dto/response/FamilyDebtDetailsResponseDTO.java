@@ -12,6 +12,6 @@ public record FamilyDebtDetailsResponseDTO(
         UserSummaryResponseDTO creator,
         UserSummaryResponseDTO responsible,
         LocalDateTime dueDate,
-        String paymentStatus
+        PaymentStatusDTO paymentStatus
 ) implements BaseFamilyDebtResponseDTO {
 }

@@ -28,6 +28,24 @@ public class FamilyDebtController {
         );
     }
 
+    @GetMapping
+    public AppResponseData findAll(@PathVariable("familyId") long familyId) {
+        return new AppResponseData(
+                HttpStatus.OK,
+                service.findAll(familyId)
+        );
+    }
+
+    @GetMapping("{familyDebtId}")
+    public AppResponseData findById(
+            @PathVariable("familyId") long familyId,
+            @PathVariable("familyDebtId") long familyDebtId) {
+        return new AppResponseData(
+                HttpStatus.OK,
+                service.findById(familyId, familyDebtId)
+        );
+    }
+
     @PatchMapping("{familyDebtId}/payment-status")
     public AppResponseData updatePaymentStatus(
             @PathVariable("familyId") long familyId,
