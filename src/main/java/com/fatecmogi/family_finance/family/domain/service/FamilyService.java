@@ -63,26 +63,26 @@ public class FamilyService {
         return familyMapper.toSummaryDTO(family);
     }
 
-    private void addMemberPre(Family family, User newMember) {
-    }
-
-    public FamilyDetailsResponseDTO addMember(Long familyId, Long userId, JwtAuthenticationToken token) {
-        User authUser = authUserRecover.getByToken(token);
-        Family family = familyRepository.findById(familyId).orElseThrow(() -> new FFResourceNotFoundException("Family not found"));
-        User user = userRepository.findById(userId).orElseThrow(() -> new FFResourceNotFoundException("User not found"));
-
-        addMemberPre(family, user);
-        family.getMembers().add(user);
-        FamilyDetailsResponseDTO savedFamilyDTO = familyMapper.toDetailsDTO(familyRepository.save(family));
-
-        userRepository.save(user);
-        addMemberPos(savedFamilyDTO, family, user);
-
-        return savedFamilyDTO;
-    }
-
-    private void addMemberPos(FamilyDetailsResponseDTO dto, Family entity, User newMember) {
-    }
+//    private void addMemberPre(Family family, User newMember) {
+//    }
+//
+//    public FamilyDetailsResponseDTO addMember(Long familyId, Long userId, JwtAuthenticationToken token) {
+//        User authUser = authUserRecover.getByToken(token);
+//        Family family = familyRepository.findById(familyId).orElseThrow(() -> new FFResourceNotFoundException("Family not found"));
+//        User user = userRepository.findById(userId).orElseThrow(() -> new FFResourceNotFoundException("User not found"));
+//
+//        addMemberPre(family, user);
+//        family.getMembers().add(user);
+//        FamilyDetailsResponseDTO savedFamilyDTO = familyMapper.toDetailsDTO(familyRepository.save(family));
+//
+//        userRepository.save(user);
+//        addMemberPos(savedFamilyDTO, family, user);
+//
+//        return savedFamilyDTO;
+//    }
+//
+//    private void addMemberPos(FamilyDetailsResponseDTO dto, Family entity, User newMember) {
+//    }
 
     public FamilyDetailsResponseDTO findByIdWithMembers(Long id) {
         Family family = familyRepository.findByIdWithMembers(id)

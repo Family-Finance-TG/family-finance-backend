@@ -45,14 +45,14 @@ public class FamilyController {
         );
     }
 
-    @PatchMapping("/{familyId}/users/{userId}")
-    @ResponseStatus(HttpStatus.OK)
-    public AppResponseData addMember(@PathVariable("familyId") long familyId, @PathVariable("userId") long userId, JwtAuthenticationToken token) {
-        return new AppResponseData(
-                HttpStatus.OK,
-                familyService.addMember(familyId, userId, token)
-        );
-    }
+//    @PatchMapping("/{familyId}/users/{userId}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public AppResponseData addMember(@PathVariable("familyId") long familyId, @PathVariable("userId") long userId, JwtAuthenticationToken token) {
+//        return new AppResponseData(
+//                HttpStatus.OK,
+//                familyService.addMember(familyId, userId, token)
+//        );
+//    }
 
     @PatchMapping("/{familyId}")
     @ResponseStatus(HttpStatus.OK)
