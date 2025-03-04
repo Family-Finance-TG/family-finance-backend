@@ -8,7 +8,6 @@ import java.util.Set;
 public record FamilyDetailsResponseDTO(
         Long id,
         String name,
-        Set<UserSummaryResponseDTO> members,
-        Set<FamilyDebtSummaryResponseDTO> debts
+        Set<UserSummaryResponseDTO> members
 ) implements FamilyBaseResponseDTO {
 }

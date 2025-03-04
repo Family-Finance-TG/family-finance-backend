@@ -37,6 +37,14 @@ public class FamilyController {
         );
     }
 
+    @GetMapping("/{id}/members")
+    public AppResponseData findByIdWithMembers(@PathVariable("id") Long id) {
+        return new AppResponseData(
+                HttpStatus.OK,
+                familyService.findByIdWithMembers(id)
+        );
+    }
+
     @PatchMapping("/{familyId}/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public AppResponseData addMember(@PathVariable("familyId") long familyId, @PathVariable("userId") long userId, JwtAuthenticationToken token) {

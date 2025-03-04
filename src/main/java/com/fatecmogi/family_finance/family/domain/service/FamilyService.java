@@ -4,6 +4,7 @@ import com.fatecmogi.family_finance.family.application.dto.request.CreateFamilyD
 import com.fatecmogi.family_finance.family.application.dto.request.UpdateFamilyDTO;
 import com.fatecmogi.family_finance.family.application.dto.response.FamilyDetailsResponseDTO;
 import com.fatecmogi.family_finance.common.domain.exception.FFResourceNotFoundException;
+import com.fatecmogi.family_finance.family.application.dto.response.FamilySummaryResponseDTO;
 import com.fatecmogi.family_finance.family.domain.mapper.FamilyMapper;
 import com.fatecmogi.family_finance.user.domain.mapper.UserMapper;
 import com.fatecmogi.family_finance.auth.domain.util.AuthUserRecover;
@@ -36,7 +37,7 @@ public class FamilyService {
     }
 
     private void savePre(CreateFamilyDTO dto, Family entity) {
-        entity.setDebts(new HashSet<>());
+
     }
 
     public FamilyDetailsResponseDTO save(CreateFamilyDTO dto, JwtAuthenticationToken token) {
@@ -56,10 +57,10 @@ public class FamilyService {
         userRepository.save(creator);
     }
 
-    public FamilyDetailsResponseDTO findById(Long id) throws FFResourceNotFoundException {
-        Family family = familyRepository.findByIdWithMembers(id)
+    public FamilySummaryResponseDTO findById(Long id) throws FFResourceNotFoundException {
+        Family family = familyRepository.findById(id)
                 .orElseThrow(() -> new FFResourceNotFoundException("Family not found"));
-        return familyMapper.toDetailsDTO(family);
+        return familyMapper.toSummaryDTO(family);
     }
 
     private void addMemberPre(Family family, User newMember) {
@@ -81,6 +82,12 @@ public class FamilyService {
     }
 
     private void addMemberPos(FamilyDetailsResponseDTO dto, Family entity, User newMember) {
+    }
+
+    public FamilyDetailsResponseDTO findByIdWithMembers(Long id) {
+        Family family = familyRepository.findByIdWithMembers(id)
+                .orElseThrow(() -> new FFResourceNotFoundException("Family not found"));
+        return familyMapper.toDetailsDTO(family);
     }
 
     public FamilyDetailsResponseDTO removeMember(Long familyId, Long userId, JwtAuthenticationToken token) {
