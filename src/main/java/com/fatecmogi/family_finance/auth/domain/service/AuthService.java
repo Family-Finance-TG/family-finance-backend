@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,6 +72,7 @@ public class AuthService {
     private void savePre(CreateUserDTO dto, User entity) {
         Role basicRole = roleRepository.findByValue(RoleEnum.BASIC.getValue());
 
+        entity.setInviteCode(UUID.randomUUID());
         entity.setPassword(passwordEncoder.encode(dto.password()));
         entity.setRoles(Set.of(basicRole));
         entity.setGender(GenderEnum.fromValue(dto.gender().value()));
