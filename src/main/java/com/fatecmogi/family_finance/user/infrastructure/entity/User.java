@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -27,6 +28,9 @@ public class User extends BaseEntity {
 
     @Column(name = "user_password", nullable = false, length = 100)
     private String password;
+
+    @Column(name="user_invite_code", nullable = false, length = 36)
+    private UUID inviteCode;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",

@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Configuration
 public class AdminUserConfig implements CommandLineRunner {
@@ -41,6 +42,7 @@ public class AdminUserConfig implements CommandLineRunner {
         User user = new User();
         user.setAccessName("admin");
         user.setPassword(passwordEncoder.encode("admin"));
+        user.setInviteCode(UUID.randomUUID());
         user.setRoles(Set.of(roleAdmin));
         user.setName("Usuário Administrador");
         user.setDateBirth(LocalDateTime.of(2003, 5, 18, 2, 23, 40));
