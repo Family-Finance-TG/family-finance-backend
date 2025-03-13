@@ -1,7 +1,9 @@
 package com.fatecmogi.family_finance.user.infrastructure.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fatecmogi.family_finance.common.infrastructure.entity.BaseEntity;
 import com.fatecmogi.family_finance.auth.infrastructure.entity.Role;
+import com.fatecmogi.family_finance.family.infrastructure.entity.Family;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -59,4 +61,9 @@ public class User extends BaseEntity {
 
     @Column(name = "user_active", nullable = false)
     private boolean active;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_family_id")
+    @JsonBackReference
+    private Family family;
 }

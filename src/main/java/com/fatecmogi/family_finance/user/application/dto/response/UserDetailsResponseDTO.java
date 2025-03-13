@@ -13,6 +13,7 @@ public record UserDetailsResponseDTO(
         float salary,
         float percentageSalary,
         String cpf,
-        GenderDTO gender
+        GenderDTO gender,
+        Long familyId
 ) implements UserBaseResponseDTO, IDTO {
 }
