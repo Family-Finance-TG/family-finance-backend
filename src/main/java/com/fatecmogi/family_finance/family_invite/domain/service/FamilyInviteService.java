@@ -120,6 +120,10 @@ public class FamilyInviteService {
         Family family = entity.getFamily();
         family.getMembers().add(user);
         familyRepository.save(family);
+
+        user.setFamily(family);
+        userRepository.save(user);
+
         familyInviteRepository.save(entity);
     }
 
