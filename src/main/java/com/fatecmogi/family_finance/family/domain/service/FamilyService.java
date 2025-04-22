@@ -54,6 +54,7 @@ public class FamilyService {
 
     private void savePos(FamilyDetailsResponseDTO dto, Family entity, User creator) {
         creator.getRoles().add(roleRepository.findByValue(RoleEnum.ADMIN.getValue()));
+        creator.setFamily(entity);
         userRepository.save(creator);
     }
 
