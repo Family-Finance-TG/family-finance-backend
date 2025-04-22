@@ -43,6 +43,14 @@ public class UserController {
     @DeleteMapping("/{id}")
     public AppResponseData delete(@PathVariable("id") Long id) {
         service.delete(id);
-        return new AppResponseData(HttpStatus.OK, "Usuário excluido com sucesso");    }
+        return new AppResponseData(HttpStatus.OK, "Usuário excluido com sucesso");
+    }
 
+    @PatchMapping("/{id}/leave-family")
+    public AppResponseData leaveFamily(@PathVariable Long id) {
+        return new AppResponseData(
+                HttpStatus.OK,
+                service.leaveFamily(id)
+        );
+    }
 }
