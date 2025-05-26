@@ -13,6 +13,7 @@ import com.fatecmogi.family_finance.user.infrastructure.entity.User;
 import com.fatecmogi.family_finance.user.infrastructure.repository.UserRepository;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,8 +39,12 @@ public class UserService {
     }
 
     public UserDetailsResponseDTO findById(Long id) {
-        return mapper.toDetailsDTO(userRepository.findById(id).orElseThrow());
+        return mapper.toDetailsDTO(
+                userRepository.findByIdAndActiveTrue(id)
+                        .orElseThrow(() -> new FFResourceNotFoundException("Usuário não encontrado ou inativo"))
+        );
     }
+
 
     private void updatePre(UpdateUserDTO dto, User entity) {
         entity.setGender(genderMapper.toEnum(dto.gender()));
@@ -61,10 +66,14 @@ public class UserService {
     private void updatePos(IDTO dto, User entity) {
     }
 
+    @Transactional
     public void delete(Long id) {
-        userRepository.deleteById(id);
-    }
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new FFResourceNotFoundException("Usuário não encontrado"));
 
+        user.setActive(false); // inativa a conta
+        userRepository.save(user);
+    }
     public UserDetailsResponseDTO leaveFamily(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new FFResourceNotFoundException("User not found")
