@@ -11,8 +11,6 @@ public record UserDetailsResponseDTO(
         String name,
         LocalDateTime dateBirth,
         UUID inviteCode,
-        float salary,
-        float percentageSalary,
         String cpf,
         GenderDTO gender,
         Long familyId,

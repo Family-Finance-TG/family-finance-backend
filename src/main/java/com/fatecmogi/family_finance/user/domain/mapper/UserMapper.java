@@ -40,8 +40,6 @@ public interface UserMapper {
                 dto.name(),
                 dto.dateBirth(),
                 dto.inviteCode(),
-                dto.salary(),
-                dto.percentageSalary(),
                 dto.cpf(),
                 dto.gender(),
                 dto.familyId(),

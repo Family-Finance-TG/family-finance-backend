@@ -42,8 +42,6 @@ public class AdminUserConfig implements CommandLineRunner {
         user.setPermissions(allPermissions);
         user.setName("Usuário Teste");
         user.setDateBirth(LocalDateTime.of(2003, 5, 18, 2, 23, 40));
-        user.setSalary(1420.4f);
-        user.setPercentageSalary(10.0f);
         user.setCpf("12345678900");
         user.setGender(GenderEnum.MALE);
         user.setActive(true);

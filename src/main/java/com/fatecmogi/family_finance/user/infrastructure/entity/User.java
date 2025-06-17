@@ -46,12 +46,6 @@ public class User extends BaseEntity {
     @Column(name = "user_date_birth", nullable = false)
     private LocalDateTime dateBirth;
 
-    @Column(name = "user_salary", nullable = false)
-    private float salary;
-
-    @Column(name = "user_percentage_salary", nullable = false)
-    private float percentageSalary;
-
     @Column(name = "user_cpf", nullable = false, length = 11)
     private String cpf;
 
