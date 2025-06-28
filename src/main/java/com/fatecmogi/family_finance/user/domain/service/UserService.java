@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,18 +71,45 @@ public class UserService {
         userRepository.save(user);
     }
     public UserDetailsResponseDTO leaveFamily(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new FFResourceNotFoundException("User not found")
-        );
-
-        if (user.getFamily() == null) {
-            throw new FFResourceNotFoundException("User does not belong to a family");
-        }
+        User user = userRepository.findByIdWithFamilyAndRoles(userId)
+                .orElseThrow(() -> new FFResourceNotFoundException("Usuário não encontrado."));
 
         Family family = user.getFamily();
-        family.getMembers().remove(user);
-        user.setFamily(null);
 
+        if (family == null) {
+            throw new FFResourceNotFoundException("Usuário não pertence a nenhuma família.");
+        }
+
+        Set<User> members = family.getMembers();
+
+        if (members.size() == 1) {
+            user.setFamily(null);
+            family.getMembers().remove(user);
+            userRepository.save(user);
+            familyRepository.save(family);
+            return mapper.toDetailsDTO(user);
+        }
+
+        boolean isAdmin = user.getRoles().stream()
+                .anyMatch(role -> role.getValue().equals("ADMIN"));
+
+        if (isAdmin) {
+
+            boolean hasOtherManager = members.stream()
+                    .filter(m -> !m.getId().equals(user.getId()))
+                    .anyMatch(m ->
+                            m.getRoles().stream().anyMatch(r ->
+                                    r.getValue().equals("ADMIN") || r.getValue().equals("CAN_INVITE")
+                            )
+                    );
+
+            if (!hasOtherManager) {
+                throw new RuntimeException("Você é o único da família com permissões. Atribua permissões a outro membro antes de sair.");
+            }
+        }
+
+        user.setFamily(null);
+        family.getMembers().remove(user);
         userRepository.save(user);
         familyRepository.save(family);
 
