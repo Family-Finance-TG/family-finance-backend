@@ -4,17 +4,15 @@ import com.fatecmogi.family_finance.auth.application.dto.LoginRequestDTO;
 import com.fatecmogi.family_finance.user.application.dto.request.CreateUserDTO;
 import com.fatecmogi.family_finance.common.application.util.AppResponseData;
 import com.fatecmogi.family_finance.auth.domain.service.AuthService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("v1/auth")
+@AllArgsConstructor
 public class AuthController {
     private final AuthService service;
-
-    public AuthController(AuthService service) {
-        this.service = service;
-    }
 
     @PostMapping("/signin")
     public AppResponseData login(@RequestBody LoginRequestDTO loginRequestDTO) {

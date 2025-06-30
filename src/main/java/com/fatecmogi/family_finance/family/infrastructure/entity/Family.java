@@ -28,4 +28,8 @@ public class Family extends BaseEntity {
     @OneToMany(mappedBy = "family", fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<User> members;
+
+    @ManyToOne
+    @JoinColumn(name = "creator_id")
+    private User creator;
 }

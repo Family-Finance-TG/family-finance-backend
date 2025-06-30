@@ -11,25 +11,21 @@ import com.fatecmogi.family_finance.user.domain.mapper.UserMapper;
 import com.fatecmogi.family_finance.user.domain.mapper.GenderMapper;
 import com.fatecmogi.family_finance.user.infrastructure.entity.User;
 import com.fatecmogi.family_finance.user.infrastructure.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final FamilyRepository familyRepository;
     private final UserMapper mapper;
     private final GenderMapper genderMapper;
-
-    public UserService(UserRepository userRepository, FamilyRepository familyRepository, UserMapper mapper, GenderMapper genderMapper) {
-        this.userRepository = userRepository;
-        this.familyRepository = familyRepository;
-        this.mapper = mapper;
-        this.genderMapper = genderMapper;
-    }
 
     public List<UserSummaryResponseDTO> findAll() {
         return userRepository.findAll().stream()
@@ -38,8 +34,12 @@ public class UserService {
     }
 
     public UserDetailsResponseDTO findById(Long id) {
-        return mapper.toDetailsDTO(userRepository.findById(id).orElseThrow());
+        return mapper.toDetailsDTO(
+                userRepository.findByIdAndActiveTrue(id)
+                        .orElseThrow(() -> new FFResourceNotFoundException("Usuário não encontrado ou inativo"))
+        );
     }
+
 
     private void updatePre(UpdateUserDTO dto, User entity) {
         entity.setGender(genderMapper.toEnum(dto.gender()));
@@ -61,10 +61,14 @@ public class UserService {
     private void updatePos(IDTO dto, User entity) {
     }
 
+    @Transactional
     public void delete(Long id) {
-        userRepository.deleteById(id);
-    }
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new FFResourceNotFoundException("Usuário não encontrado"));
 
+        user.setActive(false); // inativa a conta
+        userRepository.save(user);
+    }
     public UserDetailsResponseDTO leaveFamily(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new FFResourceNotFoundException("User not found")

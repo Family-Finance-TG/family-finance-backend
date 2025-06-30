@@ -1,21 +1,20 @@
 package com.fatecmogi.family_finance.family_invite.application.controller;
+import com.fatecmogi.family_finance.auth.domain.util.PermissionValidator;
 
 import com.fatecmogi.family_finance.common.application.util.AppResponseData;
 import com.fatecmogi.family_finance.family_invite.application.dto.request.CreateFamilyInviteRequestDTO;
 import com.fatecmogi.family_finance.family_invite.domain.service.FamilyInviteService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("v1")
+@AllArgsConstructor
 public class FamilyInviteController {
-
     private final FamilyInviteService familyInviteService;
 
-    public FamilyInviteController(FamilyInviteService familyInviteService) {
-        this.familyInviteService = familyInviteService;
-    }
 
     @PostMapping("/families/{familyId}/invites")
     public AppResponseData createInvite(
@@ -26,9 +25,9 @@ public class FamilyInviteController {
         return new AppResponseData(
                 HttpStatus.CREATED,
                 familyInviteService.save(
+                        token,
                         familyId,
-                        createFamilyInviteDTO,
-                        token
+                        createFamilyInviteDTO
                 )
         );
     }

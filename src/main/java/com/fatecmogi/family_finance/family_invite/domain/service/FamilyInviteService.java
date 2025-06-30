@@ -1,6 +1,8 @@
 package com.fatecmogi.family_finance.family_invite.domain.service;
 
 import com.fatecmogi.family_finance.auth.domain.util.AuthUserRecover;
+import com.fatecmogi.family_finance.auth.domain.util.PermissionValidator;
+import com.fatecmogi.family_finance.auth.infrastructure.entity.PermissionEnum;
 import com.fatecmogi.family_finance.common.domain.exception.FFResourceNotFoundException;
 import com.fatecmogi.family_finance.family.infrastructure.entity.Family;
 import com.fatecmogi.family_finance.family.infrastructure.repository.FamilyRepository;
@@ -28,10 +30,13 @@ public class FamilyInviteService {
     private final FamilyRepository familyRepository;
     private final UserRepository userRepository;
     private final AuthUserRecover authUserRecover;
+    private final PermissionValidator permissionValidator;
 
     private void savePre() {}
 
-    public FamilyInviteDetailsResponseDTO save(Long familyId, CreateFamilyInviteRequestDTO dto, JwtAuthenticationToken token) {
+    public FamilyInviteDetailsResponseDTO save(JwtAuthenticationToken token, Long familyId, CreateFamilyInviteRequestDTO dto) {
+        permissionValidator.hasPermissionOrThrow(token, PermissionEnum.MEMBER_INVITE);
+
         User creator = authUserRecover.getByToken(token);
         User receiver = userRepository.findByInviteCode(dto.receiverInviteCode()).orElseThrow(
                 () -> new FFResourceNotFoundException("Receiver not found")

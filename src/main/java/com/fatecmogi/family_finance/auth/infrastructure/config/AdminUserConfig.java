@@ -1,50 +1,46 @@
 package com.fatecmogi.family_finance.auth.infrastructure.config;
 
-import com.fatecmogi.family_finance.auth.infrastructure.entity.Role;
-import com.fatecmogi.family_finance.auth.infrastructure.entity.RoleEnum;
+import com.fatecmogi.family_finance.auth.infrastructure.entity.Permission;
 import com.fatecmogi.family_finance.user.infrastructure.entity.User;
 import com.fatecmogi.family_finance.user.infrastructure.entity.GenderEnum;
-import com.fatecmogi.family_finance.auth.infrastructure.repository.RoleRepository;
+import com.fatecmogi.family_finance.auth.infrastructure.repository.PermissionRepository;
 import com.fatecmogi.family_finance.user.infrastructure.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 @Configuration
+@AllArgsConstructor
 public class AdminUserConfig implements CommandLineRunner {
-    private final RoleRepository roleRepository;
+    private final PermissionRepository permissionRepository;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-
-    public AdminUserConfig(RoleRepository roleRepository, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        Role roleAdmin = roleRepository.findByValue(RoleEnum.ADMIN.getValue());
-
-        var userAdmin = userRepository.findByAccessName("admin");
+        var userAdmin = userRepository.findByAccessName("teste");
 
         if(userAdmin.isPresent()){
             System.out.println("Admin user already exists");
             return;
         }
 
+        Set<Permission> allPermissions = new HashSet<>(permissionRepository.findAll());
+
         User user = new User();
-        user.setAccessName("admin");
-        user.setPassword(passwordEncoder.encode("admin"));
+        user.setAccessName("teste");
+        user.setPassword(passwordEncoder.encode("teste"));
         user.setInviteCode(UUID.randomUUID());
-        user.setRoles(Set.of(roleAdmin));
-        user.setName("Usuário Administrador");
+        user.setPermissions(allPermissions);
+        user.setName("Usuário Teste");
         user.setDateBirth(LocalDateTime.of(2003, 5, 18, 2, 23, 40));
         user.setSalary(1420.4f);
         user.setPercentageSalary(10.0f);
