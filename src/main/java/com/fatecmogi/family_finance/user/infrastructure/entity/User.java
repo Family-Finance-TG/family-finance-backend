@@ -1,6 +1,7 @@
 package com.fatecmogi.family_finance.user.infrastructure.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fatecmogi.family_finance.auth.infrastructure.entity.PermissionEnum;
 import com.fatecmogi.family_finance.common.infrastructure.entity.BaseEntity;
 import com.fatecmogi.family_finance.auth.infrastructure.entity.Permission;
 import com.fatecmogi.family_finance.family.infrastructure.entity.Family;
@@ -60,4 +61,13 @@ public class User extends BaseEntity {
     @JoinColumn(name = "user_family_id")
     @JsonBackReference
     private Family family;
+
+    public boolean hasPermission(PermissionEnum permissionEnum) {
+        if (this.permissions == null || permissionEnum == null) {
+            return false;
+        }
+
+        return this.permissions.stream()
+                .anyMatch(permission -> permission.getValue().equals(permissionEnum.getValue()));
+    }
 }

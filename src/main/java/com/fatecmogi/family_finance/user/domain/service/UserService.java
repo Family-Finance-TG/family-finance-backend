@@ -1,6 +1,9 @@
 package com.fatecmogi.family_finance.user.domain.service;
 
+import com.fatecmogi.family_finance.auth.infrastructure.entity.PermissionEnum;
 import com.fatecmogi.family_finance.common.application.dto.IDTO;
+import com.fatecmogi.family_finance.common.domain.exception.FFConflictException;
+import com.fatecmogi.family_finance.common.domain.exception.FFInternalServerErrorException;
 import com.fatecmogi.family_finance.common.domain.exception.FFResourceNotFoundException;
 import com.fatecmogi.family_finance.family.infrastructure.entity.Family;
 import com.fatecmogi.family_finance.family.infrastructure.repository.FamilyRepository;
@@ -67,7 +70,7 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new FFResourceNotFoundException("Usuário não encontrado"));
 
-        user.setActive(false); // inativa a conta
+        user.setActive(false);
         userRepository.save(user);
     }
     public UserDetailsResponseDTO leaveFamily(Long userId) {
@@ -90,25 +93,22 @@ public class UserService {
             return mapper.toDetailsDTO(user);
         }
 
-        boolean isAdmin = user.getRoles().stream()
-                .anyMatch(role -> role.getValue().equals("ADMIN"));
 
-        if (isAdmin) {
-
+        boolean hasPermissionManage = user.hasPermission(PermissionEnum.PERMISSION_MANAGE);
+        if (hasPermissionManage) {
             boolean hasOtherManager = members.stream()
                     .filter(m -> !m.getId().equals(user.getId()))
                     .anyMatch(m ->
-                            m.getRoles().stream().anyMatch(r ->
-                                    r.getValue().equals("ADMIN") || r.getValue().equals("CAN_INVITE")
-                            )
+                        m.hasPermission(PermissionEnum.PERMISSION_MANAGE)
                     );
 
             if (!hasOtherManager) {
-                throw new RuntimeException("Você é o único da família com permissões. Atribua permissões a outro membro antes de sair.");
+                throw new FFConflictException("Você é o único da família que pode gerenciar permissões. Atribua essa responsabilidade a outro membro antes de sair.");
             }
         }
 
         user.setFamily(null);
+        user.getPermissions().clear();
         family.getMembers().remove(user);
         userRepository.save(user);
         familyRepository.save(family);

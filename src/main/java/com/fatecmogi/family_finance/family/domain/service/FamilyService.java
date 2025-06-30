@@ -61,7 +61,7 @@ public class FamilyService {
 
     public FamilySummaryResponseDTO findById(Long id) throws FFResourceNotFoundException {
         Family family = familyRepository.findById(id)
-                .orElseThrow(() -> new FFResourceNotFoundException("Family not found"));
+                .orElseThrow(() -> new FFResourceNotFoundException("Família não encontrada"));
         return familyMapper.toSummaryDTO(family);
     }
 
@@ -93,7 +93,7 @@ public class FamilyService {
     //}
     public FamilyDetailsResponseDTO findByIdWithMembers(Long id) {
         Family family = familyRepository.findByIdWithMembers(id)
-                .orElseThrow(() -> new FFResourceNotFoundException("Family not found"));
+                .orElseThrow(() -> new FFResourceNotFoundException("Família não encontrada"));
 
         Set<UserSummaryWithPermissionsDTO> memberDTOs = family.getMembers().stream()
                 .map(userMapper::toSummaryWithPermissionsDTO)
@@ -108,9 +108,10 @@ public class FamilyService {
         Family family = familyRepository.findById(familyId).orElseThrow(() -> new FFResourceNotFoundException("Família não encontrada"));
         User user = userRepository.findById(userId).orElseThrow(() -> new FFResourceNotFoundException("Usuário não encontrado"));
 
-        user.setFamily(null);
-        family.getMembers().remove(user);
+        user.getPermissions().clear();
+        userRepository.save(user);
 
+        user.setFamily(null);
         family.getMembers().remove(user);
         return familyMapper.toDetailsDTO(familyRepository.save(family));
     }

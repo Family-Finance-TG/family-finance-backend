@@ -29,9 +29,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("""
     SELECT u FROM User u
     LEFT JOIN FETCH u.family f
-    LEFT JOIN FETCH u.roles
+    LEFT JOIN FETCH u.permissions
     LEFT JOIN FETCH f.members m
-    LEFT JOIN FETCH m.roles
+    LEFT JOIN FETCH m.permissions
     WHERE u.id = :userId
 """)
     Optional<User> findByIdWithFamilyAndRoles(@Param("userId") Long userId);
