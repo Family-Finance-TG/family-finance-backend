@@ -10,8 +10,6 @@ public record CreateUserDTO(
         String accessName,
         String password,
         LocalDateTime dateBirth,
-        float salary,
-        float percentageSalary,
         String cpf,
         GenderDTO gender
 ) implements IDTO {

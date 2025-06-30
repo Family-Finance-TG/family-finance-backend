@@ -57,29 +57,33 @@ public class AuthService {
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
         return new LoginResponseDTO(jwtValue, expiresIn, user.get().getId());
-
     }
-
     private void savePre(CreateUserDTO dto, User entity) {
         entity.setInviteCode(UUID.randomUUID());
         entity.setPassword(passwordEncoder.encode(dto.password()));
         entity.setGender(GenderEnum.fromValue(dto.gender().value()));
         entity.setActive(true);
     }
-
     public void save(CreateUserDTO dto) {
-        User entity = userMapper.toEntity(dto);
+        validatePasswordStrength(dto.password());
 
+        User entity = userMapper.toEntity(dto);
         savePre(dto, entity);
         UserDetailsResponseDTO savedDTO = userMapper.toDetailsDTO(userRepository.save(entity));
         savePos(savedDTO, entity);
     }
-
     private void savePos(UserBaseResponseDTO dto, User entity) {
-
     }
-
     private boolean passwordMatches(LoginRequestDTO loginRequestDTO, User user) {
         return passwordEncoder.matches(loginRequestDTO.password(), user.getPassword());
+    }
+    private void validatePasswordStrength(String password) {
+        if (password.length() < 8 ||
+                !password.matches(".*[A-Z].*") ||
+                !password.matches(".*[a-z].*") ||
+                !password.matches(".*\\d.*") ||
+                !password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+            throw new IllegalArgumentException("A senha deve ter no mínimo 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.");
+        }
     }
 }

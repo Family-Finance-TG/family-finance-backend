@@ -8,9 +8,9 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum GenderEnum {
-    NOT_DEFINED("NOT_DEFINED", "Not defined"),
-    FEMALE("FEMALE", "Female"),
-    MALE("MALE", "Male");
+    NOT_DEFINED("NOT_DEFINED", "Não Definido"),
+    FEMALE("FEMALE", "Feminino"),
+    MALE("MALE", "Masculino");
 
     private final String value;
     private final String friendlyName;

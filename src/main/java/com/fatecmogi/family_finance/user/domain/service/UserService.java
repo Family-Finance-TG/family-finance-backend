@@ -1,6 +1,9 @@
 package com.fatecmogi.family_finance.user.domain.service;
 
+import com.fatecmogi.family_finance.auth.infrastructure.entity.PermissionEnum;
 import com.fatecmogi.family_finance.common.application.dto.IDTO;
+import com.fatecmogi.family_finance.common.domain.exception.FFConflictException;
+import com.fatecmogi.family_finance.common.domain.exception.FFInternalServerErrorException;
 import com.fatecmogi.family_finance.common.domain.exception.FFResourceNotFoundException;
 import com.fatecmogi.family_finance.family.infrastructure.entity.Family;
 import com.fatecmogi.family_finance.family.infrastructure.repository.FamilyRepository;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,22 +70,46 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new FFResourceNotFoundException("Usuário não encontrado"));
 
-        user.setActive(false); // inativa a conta
+        user.setActive(false);
         userRepository.save(user);
     }
     public UserDetailsResponseDTO leaveFamily(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new FFResourceNotFoundException("User not found")
-        );
-
-        if (user.getFamily() == null) {
-            throw new FFResourceNotFoundException("User does not belong to a family");
-        }
+        User user = userRepository.findByIdWithFamilyAndRoles(userId)
+                .orElseThrow(() -> new FFResourceNotFoundException("Usuário não encontrado."));
 
         Family family = user.getFamily();
-        family.getMembers().remove(user);
-        user.setFamily(null);
 
+        if (family == null) {
+            throw new FFResourceNotFoundException("Usuário não pertence a nenhuma família.");
+        }
+
+        Set<User> members = family.getMembers();
+
+        if (members.size() == 1) {
+            user.setFamily(null);
+            family.getMembers().remove(user);
+            userRepository.save(user);
+            familyRepository.save(family);
+            return mapper.toDetailsDTO(user);
+        }
+
+
+        boolean hasPermissionManage = user.hasPermission(PermissionEnum.PERMISSION_MANAGE);
+        if (hasPermissionManage) {
+            boolean hasOtherManager = members.stream()
+                    .filter(m -> !m.getId().equals(user.getId()))
+                    .anyMatch(m ->
+                        m.hasPermission(PermissionEnum.PERMISSION_MANAGE)
+                    );
+
+            if (!hasOtherManager) {
+                throw new FFConflictException("Você é o único da família que pode gerenciar permissões. Atribua essa responsabilidade a outro membro antes de sair.");
+            }
+        }
+
+        user.setFamily(null);
+        user.getPermissions().clear();
+        family.getMembers().remove(user);
         userRepository.save(user);
         familyRepository.save(family);
 
