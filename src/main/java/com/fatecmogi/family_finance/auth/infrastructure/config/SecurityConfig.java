@@ -23,9 +23,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.security.KeyFactory;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Arrays;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 import java.util.List;
 
 @Configuration
@@ -33,19 +36,48 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Value("${jwt.public-key}")
-    private RSAPublicKey publicKey;
+    private final RSAPublicKey publicKey;
+    private final RSAPrivateKey privateKey;
+    private final String baseFrontendUrl;
 
-    @Value("${jwt.private-key}")
-    private RSAPrivateKey privateKey;
+    public SecurityConfig(
+            @Value("${JWT_PUBLIC_KEY}") String publicKeyContent,
+            @Value("${JWT_PRIVATE_KEY}") String privateKeyContent,
+            @Value("${BASE_FRONTEND_URL}") String baseFrontendUrl
+    ) throws Exception {
+        this.publicKey = loadPublicKey(publicKeyContent);
+        this.privateKey = loadPrivateKey(privateKeyContent);
+        this.baseFrontendUrl = baseFrontendUrl;
+    }
 
-    @Value("${BASE_FRONTEND_URL}")
-    private String baseFrontendUrl;
+    private RSAPublicKey loadPublicKey(String publicKeyContent) throws Exception {
+        String publicKeyPEM = publicKeyContent
+                .replace("\\n", "\n") // Converte \n textual para quebras de linha reais
+                .replace("-----BEGIN PUBLIC KEY-----", "")
+                .replace("-----END PUBLIC KEY-----", "")
+                .replaceAll("\\s", "");
+
+        byte[] decoded = Base64.getDecoder().decode(publicKeyPEM);
+        return (RSAPublicKey) KeyFactory.getInstance("RSA")
+                .generatePublic(new X509EncodedKeySpec(decoded));
+    }
+
+    private RSAPrivateKey loadPrivateKey(String privateKeyContent) throws Exception {
+        String privateKeyPEM = privateKeyContent
+                .replace("\\n", "\n") // Converte \n textual para quebras de linha reais
+                .replace("-----BEGIN PRIVATE KEY-----", "")
+                .replace("-----END PRIVATE KEY-----", "")
+                .replaceAll("\\s", "");
+
+        byte[] decoded = Base64.getDecoder().decode(privateKeyPEM);
+        return (RSAPrivateKey) KeyFactory.getInstance("RSA")
+                .generatePrivate(new PKCS8EncodedKeySpec(decoded));
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Habilita o CORS
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "v1/hello").permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/auth/signup").permitAll()
@@ -63,7 +95,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(baseFrontendUrl));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH","DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 
@@ -74,9 +106,10 @@ public class SecurityConfig {
 
     @Bean
     public JwtEncoder jwtEncoder() {
-        JWK jwk = new RSAKey.Builder(this.publicKey).privateKey(this.privateKey).build();
+        JWK jwk = new RSAKey.Builder(publicKey)
+                .privateKey(privateKey)
+                .build();
         var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-
         return new NimbusJwtEncoder(jwks);
     }
 
