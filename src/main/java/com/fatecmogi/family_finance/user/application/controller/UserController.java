@@ -3,18 +3,15 @@ package com.fatecmogi.family_finance.user.application.controller;
 import com.fatecmogi.family_finance.user.application.dto.request.UpdateUserDTO;
 import com.fatecmogi.family_finance.common.application.util.AppResponseData;
 import com.fatecmogi.family_finance.user.domain.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("v1/users")
+@AllArgsConstructor
 public class UserController {
-
     private final UserService service;
-
-    public UserController(UserService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public AppResponseData findAll() {

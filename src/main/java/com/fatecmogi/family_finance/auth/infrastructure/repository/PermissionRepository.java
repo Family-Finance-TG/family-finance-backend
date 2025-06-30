@@ -1,10 +1,10 @@
 package com.fatecmogi.family_finance.auth.infrastructure.repository;
 
-import com.fatecmogi.family_finance.auth.infrastructure.entity.Role;
+import com.fatecmogi.family_finance.auth.infrastructure.entity.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
-    Role findByValue(String value);
+public interface PermissionRepository extends JpaRepository<Permission, Long> {
+    Permission findByValue(String value);
 }

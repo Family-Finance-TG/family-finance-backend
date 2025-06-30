@@ -7,23 +7,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "permissions")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@AttributeOverride(name = "id", column = @Column(name = "role_id"))
-public class Role {
-
+public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
+    @Column(name = "permission_id")
     private Long id;
 
-    @Column(name = "role_friendly_name", nullable = false, length = 50)
-    private String frindlyName;
-
-    @Column(name = "role_value", nullable = false, length = 50)
+    @Column(name = "permission_value", nullable = false, length = 50)
     private String value;
+
+    @Column(name = "permission_description", nullable = false, length = 50)
+    private String description;
 
 }

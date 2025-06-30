@@ -6,6 +6,7 @@ import com.fatecmogi.family_finance.family.application.dto.request.UpdateFamilyD
 import com.fatecmogi.family_finance.common.application.util.AppResponseData;
 import com.fatecmogi.family_finance.family.domain.service.FamilyService;
 import com.fatecmogi.family_finance.user.domain.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +15,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("v1/families")
+@AllArgsConstructor
 public class FamilyController {
-
     private final FamilyService familyService;
-    private final PermissionValidator permissionValidator;
-
-    public FamilyController(FamilyService familyService, UserService userService, PermissionValidator permissionValidator) {
-        this.familyService = familyService;
-        this.permissionValidator = permissionValidator;
-    }
 
 
     @PostMapping
@@ -75,7 +70,6 @@ public class FamilyController {
             @PathVariable("userId") long userId,
             JwtAuthenticationToken token
     ) {
-        permissionValidator.validate(token, "CAN_REMOVE");
         return new AppResponseData(
                 HttpStatus.OK,
                 familyService.removeMember(familyId, userId, token)

@@ -2,7 +2,7 @@ package com.fatecmogi.family_finance.user.infrastructure.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fatecmogi.family_finance.common.infrastructure.entity.BaseEntity;
-import com.fatecmogi.family_finance.auth.infrastructure.entity.Role;
+import com.fatecmogi.family_finance.auth.infrastructure.entity.Permission;
 import com.fatecmogi.family_finance.family.infrastructure.entity.Family;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,10 +35,10 @@ public class User extends BaseEntity {
     private UUID inviteCode;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles",
+    @JoinTable(name = "users_permissions",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+            inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    private Set<Permission> permissions;
 
     @Column(name = "user_name", nullable = false, length = 100)
     private String name;
