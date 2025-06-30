@@ -1,11 +1,14 @@
 {
   "build": {
-    "builder": "maven",
+    "builder": "nixpacks",
     "config": {
-      "mavenArgs": "clean package -DskipTests"
+      "nixpacks": {
+        "buildCommand": "mvn clean package -DskipTests",
+        "startCommand": "java -jar target/family-finance.jar",
+        "variables": {
+          "JAVA_VERSION": "21"
+        }
+      }
     }
-  },
-  "deploy": {
-    "startCommand": "java -jar target/family-finance.jar"
   }
 }
