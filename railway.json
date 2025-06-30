@@ -1,0 +1,11 @@
+{
+  "build": {
+    "builder": "maven",
+    "config": {
+      "mavenArgs": "clean package -DskipTests"
+    }
+  },
+  "deploy": {
+    "startCommand": "java -jar target/family-finance.jar"
+  }
+}

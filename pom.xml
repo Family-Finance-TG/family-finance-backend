@@ -61,11 +61,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.7.4</version>
-		</dependency>
-		<dependency>
 			<groupId>me.paulschwarz</groupId>
 			<artifactId>spring-dotenv</artifactId>
 			<version>4.0.0</version>
@@ -102,6 +97,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>family-finance</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
