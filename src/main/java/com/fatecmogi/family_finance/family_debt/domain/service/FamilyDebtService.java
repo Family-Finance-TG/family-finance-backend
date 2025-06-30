@@ -16,6 +16,7 @@ import com.fatecmogi.family_finance.family.infrastructure.repository.FamilyRepos
 import com.fatecmogi.family_finance.user.infrastructure.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 
