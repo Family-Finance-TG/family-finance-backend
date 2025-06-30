@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class PermissionValidator {
-
     private final UserRepository userRepository;
 
     public void hasPermissionOrThrow(JwtAuthenticationToken token, PermissionEnum requiredPermission) {

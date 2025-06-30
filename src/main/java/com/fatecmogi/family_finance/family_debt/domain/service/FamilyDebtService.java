@@ -14,6 +14,7 @@ import com.fatecmogi.family_finance.user.infrastructure.entity.User;
 import com.fatecmogi.family_finance.family_debt.infrastructure.repository.FamilyDebtRepository;
 import com.fatecmogi.family_finance.family.infrastructure.repository.FamilyRepository;
 import com.fatecmogi.family_finance.user.infrastructure.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
@@ -23,26 +24,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class FamilyDebtService {
     private final FamilyDebtRepository familyDebtRepository;
     private final FamilyRepository familyRepository;
     private final UserRepository userRepository;
     private final FamilyDebtMapper familyDebtMapper;
     private final PermissionValidator permissionValidator;
-
-    public FamilyDebtService(
-            FamilyDebtRepository familyDebtRepository,
-            FamilyRepository familyRepository,
-            UserRepository userRepository,
-            FamilyDebtMapper familyDebtMapper,
-            PermissionValidator permissionValidator
-    ) {
-        this.familyDebtRepository = familyDebtRepository;
-        this.familyRepository = familyRepository;
-        this.userRepository = userRepository;
-        this.familyDebtMapper = familyDebtMapper;
-        this.permissionValidator = permissionValidator;
-    }
 
     private void savePre(CreateFamilyDebtDTO dto, FamilyDebt entity, Family family) {
         entity.setFamily(family);

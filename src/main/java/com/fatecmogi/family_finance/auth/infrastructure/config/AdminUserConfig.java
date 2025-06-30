@@ -6,6 +6,7 @@ import com.fatecmogi.family_finance.user.infrastructure.entity.GenderEnum;
 import com.fatecmogi.family_finance.auth.infrastructure.repository.PermissionRepository;
 import com.fatecmogi.family_finance.user.infrastructure.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,16 +17,11 @@ import java.util.Set;
 import java.util.UUID;
 
 @Configuration
+@AllArgsConstructor
 public class AdminUserConfig implements CommandLineRunner {
     private final PermissionRepository permissionRepository;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-
-    public AdminUserConfig(PermissionRepository permissionRepository, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.permissionRepository = permissionRepository;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     @Transactional

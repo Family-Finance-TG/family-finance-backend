@@ -12,6 +12,7 @@ import com.fatecmogi.family_finance.user.infrastructure.entity.User;
 import com.fatecmogi.family_finance.user.infrastructure.entity.GenderEnum;
 import com.fatecmogi.family_finance.auth.infrastructure.repository.PermissionRepository;
 import com.fatecmogi.family_finance.user.infrastructure.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -23,20 +24,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
-    private final PermissionRepository permissionRepository;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtEncoder jwtEncoder;
-
-    public AuthService(UserRepository userRepository, PermissionRepository permissionRepository, UserMapper userMapper, BCryptPasswordEncoder passwordEncoder, JwtEncoder jwtEncoder) {
-        this.userRepository = userRepository;
-        this.permissionRepository = permissionRepository;
-        this.userMapper = userMapper;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtEncoder = jwtEncoder;
-    }
 
     public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
         var user = userRepository.findByAccessName(loginRequestDTO.accessName());

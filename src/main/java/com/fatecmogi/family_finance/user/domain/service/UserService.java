@@ -11,6 +11,7 @@ import com.fatecmogi.family_finance.user.domain.mapper.UserMapper;
 import com.fatecmogi.family_finance.user.domain.mapper.GenderMapper;
 import com.fatecmogi.family_finance.user.infrastructure.entity.User;
 import com.fatecmogi.family_finance.user.infrastructure.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,18 +20,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final FamilyRepository familyRepository;
     private final UserMapper mapper;
     private final GenderMapper genderMapper;
-
-    public UserService(UserRepository userRepository, FamilyRepository familyRepository, UserMapper mapper, GenderMapper genderMapper) {
-        this.userRepository = userRepository;
-        this.familyRepository = familyRepository;
-        this.mapper = mapper;
-        this.genderMapper = genderMapper;
-    }
 
     public List<UserSummaryResponseDTO> findAll() {
         return userRepository.findAll().stream()
